@@ -1,1 +1,1 @@
-export const App = (): React.FC => null;
+export const App = (): null => null;
