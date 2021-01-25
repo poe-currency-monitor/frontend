@@ -4,7 +4,11 @@ module.exports = {
   darkMode: false,
 
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        inter: 'Inter',
+      },
+    },
   },
 
   variants: {
