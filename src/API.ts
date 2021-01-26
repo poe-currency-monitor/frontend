@@ -1,3 +1,5 @@
+import { Character, StashTab } from './interfaces/poe.interfaces';
+
 const ENDPOINT = 'http://localhost:4201/api';
 const DEFAULT_HEADERS = {
   'Content-Type': 'application/json',
@@ -21,36 +23,14 @@ export type LoginResponse = {
 
 export type CharactersResponse = {
   accountName: string;
-  characters: {
-    name: string;
-    league: string;
-    classId: number;
-    ascendancyClass: number;
-    class: string;
-    level: number;
-    experience: number;
-  }[];
+  characters: Character[];
 };
 
 export type StashTabsResponse = {
   accountName: string;
   tabs: {
     numTabs: number;
-    tabs: {
-      n: string;
-      i: number;
-      id: string;
-      type: string;
-      selected: boolean;
-      srcL: string;
-      srcC: string;
-      srcR: string;
-      colour: {
-        r: number;
-        g: number;
-        b: number;
-      };
-    }[];
+    tabs: StashTab[];
   };
 };
 
