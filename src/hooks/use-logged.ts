@@ -7,9 +7,9 @@ import { UserContext } from '../contexts/UserContext';
  * Call this hook at the top-level of your views to make sure a user is
  * correctly logged-in.
  *
- * Check using `token` and `accountName` `UserContext` properties.
+ * @returns [token, accountName, isLogged]
  */
-export function useLogged(): boolean {
+export function useLogged(): [string, string, boolean] {
   const history = useHistory();
   const { token, accountName } = useContext(UserContext);
 
@@ -21,5 +21,5 @@ export function useLogged(): boolean {
     }
   }, [isLogged, history]);
 
-  return isLogged;
+  return [token, accountName, isLogged];
 }
