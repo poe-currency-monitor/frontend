@@ -1,18 +1,22 @@
-import React, { useMemo, useState } from 'react';
+import React, { useContext, useMemo, useState } from 'react';
 import { useMutation } from 'react-query';
 import { useHistory } from 'react-router-dom';
 import { Button, Input } from 'antd';
 
 import { postLogin } from '../../API';
+import { UserContext } from '../../contexts/UserContext';
 
 export const LoginView: React.FC = () => {
   const history = useHistory();
+  const { setAccountName, setToken } = useContext(UserContext);
 
   const [poesessid, setPoesessid] = useState('');
   const isPoesessidValid = useMemo(() => /[A-Fa-f0-9]{32}/gm.test(poesessid), [poesessid]);
 
   const login = useMutation(() => postLogin(poesessid), {
-    onSuccess: () => {
+    onSuccess: (data) => {
+      setAccountName(data.accountName);
+      setToken(data.token);
       history.push('/setup');
     },
   });
