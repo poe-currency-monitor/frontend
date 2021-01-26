@@ -1,14 +1,21 @@
 import React, { useMemo, useState } from 'react';
 import { useMutation } from 'react-query';
+import { useHistory } from 'react-router-dom';
 import { Button, Input } from 'antd';
 
 import { postLogin } from '../../API';
 
 export const LoginView: React.FC = () => {
+  const history = useHistory();
+
   const [poesessid, setPoesessid] = useState('');
   const isPoesessidValid = useMemo(() => /[A-Fa-f0-9]{32}/gm.test(poesessid), [poesessid]);
 
-  const login = useMutation(() => postLogin(poesessid));
+  const login = useMutation(() => postLogin(poesessid), {
+    onSuccess: () => {
+      history.push('/setup');
+    },
+  });
 
   const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
