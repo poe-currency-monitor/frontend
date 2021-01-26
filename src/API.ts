@@ -8,6 +8,19 @@ export type LoginResponse = {
   accountName: string;
 };
 
+export type CharactersResponse = {
+  accountName: string;
+  characters: {
+    name: string;
+    league: string;
+    classId: number;
+    ascendancyClass: number;
+    class: string;
+    level: number;
+    experience: number;
+  }[];
+};
+
 export const postLogin = (poesessid: string): Promise<LoginResponse> =>
   fetch(`${ENDPOINT}/auth/`, {
     method: 'POST',
