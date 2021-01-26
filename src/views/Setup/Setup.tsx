@@ -1,3 +1,9 @@
 import React from 'react';
 
-export const SetupView: React.FC = () => null;
+import { useLogged } from '../../hooks/use-logged';
+
+export const SetupView: React.FC = () => {
+  useLogged();
+
+  return null;
+};
