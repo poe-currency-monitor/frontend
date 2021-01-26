@@ -1,6 +1,9 @@
 import { createContext } from 'react';
 
 export type UserContextType = {
+  poesessid: string;
+  setPoesessid: (value: string) => unknown;
+
   token: string;
   setToken: (value: string) => unknown;
 
@@ -9,6 +12,9 @@ export type UserContextType = {
 };
 
 export const UserContext = createContext<UserContextType>({
+  poesessid: '',
+  setPoesessid: () => null,
+
   token: '',
   setToken: () => null,
 

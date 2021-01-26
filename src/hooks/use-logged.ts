@@ -7,13 +7,13 @@ import { UserContext } from '../contexts/UserContext';
  * Call this hook at the top-level of your views to make sure a user is
  * correctly logged-in.
  *
- * @returns [token, accountName, isLogged]
+ * @returns [poesessid, token, accountName, isLogged]
  */
-export function useLogged(): [string, string, boolean] {
+export function useLogged(): [string, string, string, boolean] {
   const history = useHistory();
-  const { token, accountName } = useContext(UserContext);
+  const { poesessid, token, accountName } = useContext(UserContext);
 
-  const isLogged = useMemo(() => !!token && !!accountName, [token, accountName]);
+  const isLogged = useMemo(() => !!poesessid && !!token && !!accountName, [poesessid, token, accountName]);
 
   useEffect(() => {
     if (!isLogged) {
@@ -21,5 +21,5 @@ export function useLogged(): [string, string, boolean] {
     }
   }, [isLogged, history]);
 
-  return [token, accountName, isLogged];
+  return [poesessid, token, accountName, isLogged];
 }

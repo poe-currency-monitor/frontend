@@ -8,13 +8,14 @@ import { UserContext } from '../../contexts/UserContext';
 
 export const LoginView: React.FC = () => {
   const history = useHistory();
-  const { setAccountName, setToken } = useContext(UserContext);
+  const { setPoesessid, setAccountName, setToken } = useContext(UserContext);
 
-  const [poesessid, setPoesessid] = useState('');
-  const isPoesessidValid = useMemo(() => /[A-Fa-f0-9]{32}/gm.test(poesessid), [poesessid]);
+  const [poesessidInput, setPoesessidInput] = useState('');
+  const isPoesessidInputValid = useMemo(() => /[A-Fa-f0-9]{32}/gm.test(poesessidInput), [poesessidInput]);
 
-  const login = useMutation(() => postLogin(poesessid), {
+  const login = useMutation(() => postLogin(poesessidInput), {
     onSuccess: (data) => {
+      setPoesessid(poesessidInput);
       setAccountName(data.accountName);
       setToken(data.token);
       history.push('/setup');
@@ -24,7 +25,7 @@ export const LoginView: React.FC = () => {
   const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (isPoesessidValid) {
+    if (isPoesessidInputValid) {
       login.mutate();
     }
   };
@@ -41,11 +42,11 @@ export const LoginView: React.FC = () => {
         <Input
           placeholder="Enter your POESESSID..."
           type="text"
-          onChange={(e) => setPoesessid(e.target.value)}
+          onChange={(e) => setPoesessidInput(e.target.value)}
           style={{ marginBottom: '0.5rem' }}
         />
 
-        <Button type="primary" htmlType="submit" loading={login.isLoading} disabled={!isPoesessidValid}>
+        <Button type="primary" htmlType="submit" loading={login.isLoading} disabled={!isPoesessidInputValid}>
           Login
         </Button>
       </form>
