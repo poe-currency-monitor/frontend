@@ -5,7 +5,15 @@ import { AppState } from './AppState';
 import { Router } from './Router';
 
 export const App: React.FC = () => {
-  const queryClient = new QueryClient();
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+        refetchOnMount: false,
+        refetchOnReconnect: false,
+      },
+    },
+  });
 
   return (
     <AppState>
