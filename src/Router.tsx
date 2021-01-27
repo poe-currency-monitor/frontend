@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
+import { DashboardView } from './views/Dashboard';
 import { LoginView } from './views/Login';
 import { SetupView } from './views/Setup';
 import { SetupRatesView } from './views/SetupRates';
@@ -18,6 +19,10 @@ export const Router: React.FC = () => (
 
       <Route path="/setup-rates">
         <SetupRatesView />
+      </Route>
+
+      <Route path="/dashboard">
+        <DashboardView />
       </Route>
 
       <Route path="*">
