@@ -1,4 +1,4 @@
-import { Character, StashTab } from './interfaces/poe.interfaces';
+import { Character, StashTab, Item } from './interfaces/poe.interfaces';
 import { AllCurrencyRatesResponse, AllItemRatesResponse } from './interfaces/poe-ninja.interfaces';
 
 const ENDPOINT =
@@ -34,6 +34,16 @@ export type StashTabsResponse = {
   tabs: {
     numTabs: number;
     tabs: StashTab[];
+  };
+};
+
+export type StashTabsItemsResponse = {
+  accountName: string;
+  items: {
+    [key: string]: {
+      tabIndex: number;
+      items: Item[];
+    };
   };
 };
 
@@ -133,4 +143,34 @@ export const getAllItemRates = (token: string, league: string): Promise<AllItemR
     }
 
     return response.json() as Promise<AllItemRatesResponse>;
+  });
+
+/**
+ * Retrieve all stash-tabs items from a Path of Exile account.
+ *
+ * @param poesessid Path of Exile session ID.
+ * @param token JWT.
+ * @param accountName Path of Exile account-name.
+ * @param league Path of Exile character league.
+ * @param tabIndexes Stash-tabs indexes.
+ */
+export const getStashTabsItems = (
+  poesessid: string,
+  token: string,
+  accountName: string,
+  league: string,
+  tabIndexes: string,
+): Promise<StashTabsItemsResponse> =>
+  fetch(
+    `${ENDPOINT}/poe/${accountName}/stash-items/?poesessid=${poesessid}&league=${league}&realm=pc&tabIndex=${tabIndexes}`,
+    {
+      method: 'GET',
+      headers: { ...getAuthorizationHeaders(token) },
+    },
+  ).then((response) => {
+    if (!response.ok) {
+      throw new Error(`Unable to retrieve all stash-tabs items: error ${response.status}`);
+    }
+
+    return response.json() as Promise<StashTabsItemsResponse>;
   });
