@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 
-import { Character, StashTab } from '../interfaces/poe.interfaces';
+import { Character, StashTab, Item } from '../interfaces/poe.interfaces';
 
 export type UserContextType = {
   poesessid: string;
@@ -17,6 +17,9 @@ export type UserContextType = {
 
   selectedStashTabs: StashTab[];
   setSelectedStashTabs: (value: StashTab[]) => unknown;
+
+  stashTabsItems: { [key: string]: Item[] } | null;
+  setStashTabsItems: (value: { [key: string]: Item[] } | null) => unknown;
 };
 
 export const UserContext = createContext<UserContextType>({
@@ -34,4 +37,7 @@ export const UserContext = createContext<UserContextType>({
 
   selectedStashTabs: [],
   setSelectedStashTabs: () => null,
+
+  stashTabsItems: null,
+  setStashTabsItems: () => null,
 });

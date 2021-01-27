@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Character, StashTab } from './interfaces/poe.interfaces';
+import { Character, StashTab, Item } from './interfaces/poe.interfaces';
 import { CurrenciesResponse, ItemsResponse } from './interfaces/poe-ninja.interfaces';
 import { RatesContext } from './contexts/RatesContext';
 import { UserContext } from './contexts/UserContext';
@@ -11,6 +11,7 @@ export const AppState: React.FC = ({ children }) => {
   const [accountName, setAccountName] = useState('');
   const [selectedCharacter, setSelectedCharacter] = useState<Character | null>(null);
   const [selectedStashTabs, setSelectedStashTabs] = useState<StashTab[]>([]);
+  const [stashTabsItems, setStashTabsItems] = useState<{ [key: string]: Item[] } | null>(null);
 
   const [currencyRates, setCurrencyRates] = useState<CurrenciesResponse | null>(null);
   const [fragmentRates, setFragmentRates] = useState<CurrenciesResponse | null>(null);
@@ -46,6 +47,8 @@ export const AppState: React.FC = ({ children }) => {
         setSelectedCharacter,
         selectedStashTabs,
         setSelectedStashTabs,
+        stashTabsItems,
+        setStashTabsItems,
       }}
     >
       <RatesContext.Provider
