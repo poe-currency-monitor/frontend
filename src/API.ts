@@ -1,6 +1,9 @@
 import { Character, StashTab } from './interfaces/poe.interfaces';
+import { AllCurrencyRatesResponse, AllItemRatesResponse } from './interfaces/poe-ninja.interfaces';
 
-const ENDPOINT = 'http://localhost:4201/api';
+const ENDPOINT =
+  process.env.NODE_ENV === 'production' ? 'https://poecurrencymonitor.cf/api' : 'http://localhost:4201/api';
+
 const DEFAULT_HEADERS = {
   'Content-Type': 'application/json',
 };
@@ -94,4 +97,40 @@ export const getStashTabs = (
     }
 
     return response.json() as Promise<StashTabsResponse>;
+  });
+
+/**
+ * Retrieve all currency-rates from poe.ninja API.
+ *
+ * @param token JWT.
+ * @param league Path of Exile character league.
+ */
+export const getAllCurrencyRates = (token: string, league: string): Promise<AllCurrencyRatesResponse> =>
+  fetch(`${ENDPOINT}/poe-ninja/all-currency-rates/?league=${league}&language=en`, {
+    method: 'GET',
+    headers: { ...getAuthorizationHeaders(token) },
+  }).then((response) => {
+    if (!response.ok) {
+      throw new Error(`Unable to retrieve all currency-rates: error ${response.status}`);
+    }
+
+    return response.json() as Promise<AllCurrencyRatesResponse>;
+  });
+
+/**
+ * Retrieve all item-rates from poe.ninja API.
+ *
+ * @param token JWT.
+ * @param league Path of Exile character league.
+ */
+export const getAllItemRates = (token: string, league: string): Promise<AllItemRatesResponse> =>
+  fetch(`${ENDPOINT}/poe-ninja/all-item-rates/?league=${league}&language=en`, {
+    method: 'GET',
+    headers: { ...getAuthorizationHeaders(token) },
+  }).then((response) => {
+    if (!response.ok) {
+      throw new Error(`Unable to retrieve all item-rates: error ${response.status}`);
+    }
+
+    return response.json() as Promise<AllItemRatesResponse>;
   });

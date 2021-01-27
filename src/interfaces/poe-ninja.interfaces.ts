@@ -1,17 +1,17 @@
 type Language = {
   name: string;
   translations: Record<string, never>;
-}
+};
 
 type Modifier = {
   text: string;
   optional: boolean;
-}
+};
 
 type SparkLine = {
   data: (number | null)[];
   totalChange: number;
-}
+};
 
 type Pay = {
   id: number;
@@ -24,7 +24,7 @@ type Pay = {
   data_point_count: number;
   includes_secondary: boolean;
   listing_count: number;
-}
+};
 
 type Receive = {
   id: number;
@@ -37,7 +37,7 @@ type Receive = {
   data_point_count: number;
   includes_secondary: boolean;
   listing_count: number;
-}
+};
 export type CurrencyLine = {
   currencyTypeName: string;
   pay: Pay;
@@ -48,14 +48,14 @@ export type CurrencyLine = {
   lowConfidenceReceiveSparkLine: SparkLine;
   chaosEquivalent: number;
   detailsId: string;
-}
+};
 
 export type CurrencyDetail = {
   id: number;
   icon: string;
   name: string;
   tradeId: string;
-}
+};
 
 export type ItemLine = {
   id: number;
@@ -83,7 +83,7 @@ export type ItemLine = {
   prophecyText?: string;
   artFilename?: string;
   baseType?: string;
-}
+};
 
 /**
  * Response from the `/poe-ninja/currency-rates/` endpoint.
@@ -92,7 +92,7 @@ export type CurrenciesResponse = {
   lines: CurrencyLine[];
   currencyDetails: CurrencyDetail[];
   language: Language;
-}
+};
 
 /**
  * Response from the `/poe-ninja/all-currency-rates/` endpoint.
@@ -102,7 +102,7 @@ export type AllCurrencyRatesResponse = {
     type: 'Currency' | 'Fragment';
     response: CurrenciesResponse;
   }[];
-}
+};
 
 /**
  * Response from the `/poe-ninja/item-rates/` endpoint.
@@ -110,7 +110,7 @@ export type AllCurrencyRatesResponse = {
 export type ItemsResponse = {
   lines: ItemLine[];
   language: Language;
-}
+};
 
 /**
  * Response from the `/poe-ninja/all-item-rates/` endpoint.
@@ -135,6 +135,6 @@ export type AllItemRatesResponse = {
       | 'UniqueFlask'
       | 'Beast'
       | 'Vial';
-    response: ItemsResponse[];
-  };
-}
+    response: ItemsResponse;
+  }[];
+};
