@@ -26,7 +26,7 @@ export const ItemsWorthTable: React.FC<ItemsWorthTableProps> = ({ items }) => {
         title: 'Total Chaos Value',
         dataIndex: 'chaosEquivalent',
         key: 'chaosEquivalent',
-        defaultFilteredValue: ['chaosEquivalent'],
+        defaultSortOrder: 'descend',
         sorter: (a, b) => a.chaosEquivalent - b.chaosEquivalent,
       },
       {
@@ -47,5 +47,7 @@ export const ItemsWorthTable: React.FC<ItemsWorthTableProps> = ({ items }) => {
 
   const dataSource = useMemo<ItemWorth[]>(() => items, [items]);
 
-  return <Table columns={columns} dataSource={dataSource} />;
+  const isLoading = useMemo(() => !items || items.length < 1, [items]);
+
+  return <Table columns={columns} dataSource={dataSource} loading={isLoading} bordered />;
 };
