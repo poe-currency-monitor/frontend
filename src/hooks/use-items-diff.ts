@@ -15,33 +15,48 @@ export function useItemsDiff(newValue: { [key: string]: Item[] }, oldValue: { [k
   const newValueFlat = useMemo(() => Object.values(newValue).flatMap((e) => e), [newValue]);
   const oldValueFlat = useMemo(() => Object.values(oldValue).flatMap((e) => e), [oldValue]);
 
-  const newItems = useMemo(() => newValueFlat.filter((nv) => !oldValueFlat.includes(nv)), [newValueFlat, oldValueFlat]);
-
-  const newStackSizeItems = useMemo(
-    () =>
-      newValueFlat
-        .filter((nv) => {
-          // Items that are both in `newValue` and `oldValue`.
-          const intersectionItems = oldValueFlat.filter((ov) => nv.id === ov.id);
-
-          return intersectionItems.filter((ii) => nv.stackSize > ii.stackSize);
-        })
-        // Substract `newValue` stack-size minus `oldValue` stack-size to get
-        // the stack-size diff between the 2 values.
-        .map((nv) => {
-          const oldValueMatching = oldValueFlat.find((ov) => nv.id === ov.id);
-
-          if (!oldValueMatching) {
-            return nv;
-          }
-
-          return {
-            ...nv,
-            stackSize: nv.stackSize - oldValueMatching.stackSize,
-          };
-        }),
+  const newItems = useMemo(
+    () => (newValueFlat.length && oldValueFlat.length ? newValueFlat.filter((nv) => !oldValueFlat.includes(nv)) : []),
     [newValueFlat, oldValueFlat],
   );
+
+  const newStackSizeItems = useMemo(() => {
+    if (newValueFlat.length && oldValueFlat.length) {
+      // Intersection items are items that are both present between in the
+      // new-value and old-value.
+      const intersectionItems = newValueFlat.filter((_nv) => oldValueFlat.findIndex((_ov) => _nv.id === _ov.id) > -1);
+
+      // Intersection items that have a greater stack-size in their new-value
+      // than their old-value.
+      const intersectionItemsWithGreaterStackSize = intersectionItems.filter((ii) => {
+        // The old value item should always be found due to array filter above.
+        // However with TypeScript, we always handle the `undefined` case.
+        const ov = oldValueFlat.find((_ov) => ii.id === _ov.id);
+
+        return ov ? ii.stackSize > ov.stackSize : false;
+      });
+
+      // Re-write the `stackSize` value of an intersection item with a greater
+      // stack-size to always return the difference between the new stack-size
+      // value and the old stack-size value.
+      const formattedItemsWithNewStackSize = intersectionItemsWithGreaterStackSize.map((nv) => {
+        // The old value item should always be found due to array filter above.
+        // However with TypeScript, we always handle the `undefined` case.
+        const ov = oldValueFlat.find((_ov) => nv.id === _ov.id);
+
+        return !ov
+          ? nv
+          : {
+              ...nv,
+              stackSize: nv.stackSize - ov.stackSize,
+            };
+      });
+
+      return formattedItemsWithNewStackSize;
+    }
+
+    return [];
+  }, [newValueFlat, oldValueFlat]);
 
   const itemsDiff = useMemo(() => [...newItems, ...newStackSizeItems], [newItems, newStackSizeItems]);
 
