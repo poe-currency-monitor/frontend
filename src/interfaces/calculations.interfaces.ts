@@ -3,4 +3,5 @@ export type ItemWorth = {
   quantity: number;
   image: string;
   chaosEquivalent: number;
+  rate: number;
 };

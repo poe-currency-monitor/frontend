@@ -12,6 +12,8 @@ import { RatesContext } from '../../contexts/RatesContext';
 export function useCalculateCurrencyWorth(items: Item[]): ItemWorth[] {
   const { currencyRates, fragmentRates } = useContext(RatesContext);
 
+  const filteredItems = useMemo(() => items.filter((item) => !item.typeLine.includes('Shard')), [items]);
+
   const rates = useMemo(
     () => (currencyRates && fragmentRates ? [...currencyRates.lines, ...fragmentRates.lines] : []),
     [currencyRates, fragmentRates],
@@ -19,23 +21,25 @@ export function useCalculateCurrencyWorth(items: Item[]): ItemWorth[] {
 
   const worth = useMemo<ItemWorth[]>(
     () =>
-      items.map((item) => {
+      filteredItems.map((item) => {
         const rate = rates.find((r) => r.currencyTypeName === item.typeLine);
 
         const payload: ItemWorth = {
           name: rate ? rate.currencyTypeName : item.typeLine,
           quantity: item.stackSize || 1,
           image: item.icon,
-          chaosEquivalent: rate ? (item.stackSize || 1) * rate.chaosEquivalent : 0,
+          chaosEquivalent: rate ? Math.floor((item.stackSize || 1) * rate.chaosEquivalent * 100) / 100 : 0,
+          rate: rate ? Math.floor(rate.chaosEquivalent * 100) / 100 : 0,
         };
 
         if (item.typeLine === 'Chaos Orb') {
           payload.chaosEquivalent = item.stackSize;
+          payload.rate = 1;
         }
 
         return payload;
       }),
-    [items, rates],
+    [filteredItems, rates],
   );
 
   return worth;
