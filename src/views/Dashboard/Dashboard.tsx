@@ -6,6 +6,7 @@ import { getStashTabsItems, StashTabsItemsResponse } from '../../API';
 import { UserContext } from '../../contexts/UserContext';
 import { useLogged } from '../../hooks/use-logged';
 import { useCalculateWorth } from '../../hooks/use-calculate-worth';
+import { ItemsWorthTable } from '../../components/ItemsWorthTable';
 
 /**
  * Format stash-tabs item API response into a usable object.
@@ -42,6 +43,8 @@ export const DashboardView: React.FC = () => {
 
   const { currencyItemsWorth } = useCalculateWorth(itemsData);
 
+  const itemsWorth = useMemo(() => [...currencyItemsWorth], [currencyItemsWorth]);
+
   // Initial load of stash-tabs items.
   useEffect(() => {
     if (!items.isLoading && items.data && !stashTabsItems) {
@@ -50,13 +53,15 @@ export const DashboardView: React.FC = () => {
     }
   });
 
-  useEffect(() => {
-    console.log(currencyItemsWorth);
-  }, [currencyItemsWorth]);
-
   return (
     <main className="flex flex-col justify-center max-w-5xl mx-auto">
       <h1 className="mb-8 mt-12 text-white text-center text-3xl font-bold">Dashboard</h1>
+
+      <section>
+        <h2 className="mb-4 text-white text-xl font-medium">Stash-tabs content</h2>
+
+        <ItemsWorthTable items={itemsWorth} />
+      </section>
     </main>
   );
 };
