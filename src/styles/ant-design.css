@@ -65,3 +65,38 @@
 .ant-table .ant-table-container .ant-table-content .ant-table-tbody .ant-table-cell {
   @apply border-blue-gray-800 bg-blue-gray-700 text-gray-200 !important;
 }
+
+/* Table pagination */
+.ant-table + .ant-pagination {
+  @apply inline-flex float-right !important;
+}
+
+.ant-table + .ant-pagination .ant-pagination-prev,
+.ant-table + .ant-pagination .ant-pagination-next {
+  @apply bg-blue-gray-700 !important;
+}
+
+.ant-table + .ant-pagination .ant-pagination-prev {
+  @apply mr-1 !important;
+}
+
+.ant-table + .ant-pagination .ant-pagination-next {
+  @apply ml-1 !important;
+}
+
+.ant-table + .ant-pagination .ant-pagination-prev .ant-pagination-item-link,
+.ant-table + .ant-pagination .ant-pagination-next .ant-pagination-item-link {
+  @apply flex items-center justify-center text-gray-200 !important;
+}
+
+.ant-table + .ant-pagination .ant-pagination-item {
+  @apply flex items-center justify-center mx-1 border-none !important;
+}
+
+.ant-table + .ant-pagination .ant-pagination-item a {
+  @apply text-gray-200 !important;
+}
+
+.ant-table + .ant-pagination .ant-pagination-item.ant-pagination-item-active {
+  @apply bg-gray-700 text-gray-200 !important;
+}
