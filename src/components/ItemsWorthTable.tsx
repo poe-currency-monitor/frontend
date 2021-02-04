@@ -49,5 +49,5 @@ export const ItemsWorthTable: React.FC<ItemsWorthTableProps> = ({ items }) => {
 
   const isLoading = useMemo(() => !items || items.length < 1, [items]);
 
-  return <Table columns={columns} dataSource={dataSource} loading={isLoading} bordered />;
+  return <Table columns={columns} dataSource={dataSource} loading={isLoading} size="small" />;
 };

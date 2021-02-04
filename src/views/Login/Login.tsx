@@ -32,9 +32,9 @@ export const LoginView: React.FC = () => {
 
   return (
     <main className="flex flex-col justify-center max-w-5xl mx-auto">
-      <h1 className="mb-4 mt-12 text-white text-center text-3xl font-bold">Path of Exile — Mapping Helper</h1>
+      <h1 className="mb-4 mt-12 text-gray-200 text-center text-3xl font-bold">Path of Exile — Mapping Helper</h1>
 
-      <p className="mb-4 text-white text-center text-base">
+      <p className="mb-4 text-gray-200 text-center text-base">
         Mapping income tracking across multiple stash-tabs, shareable and detailed mapping history.
       </p>
 
@@ -46,7 +46,7 @@ export const LoginView: React.FC = () => {
           style={{ marginBottom: '0.5rem' }}
         />
 
-        <Button type="primary" htmlType="submit" loading={login.isLoading} disabled={!isPoesessidInputValid}>
+        <Button block type="primary" htmlType="submit" loading={login.isLoading} disabled={!isPoesessidInputValid}>
           Login
         </Button>
       </form>

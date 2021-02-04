@@ -1,0 +1,67 @@
+.ant-input {
+  @apply transition border-blue-gray-600 bg-blue-gray-600 placeholder-gray-400 text-gray-200 focus:ring focus:ring-blue-gray-600 focus:ring-opacity-25 !important;
+}
+
+.ant-btn.ant-btn-primary {
+  @apply transition border-none !important;
+}
+
+.ant-btn.ant-btn-primary:not(:disabled) {
+  @apply text-gray-200 bg-blue-600 hover:bg-blue-700 focus:ring focus:ring-blue-600 focus:ring-opacity-25 !important;
+}
+
+.ant-btn.ant-btn-primary:disabled {
+  @apply bg-blue-gray-600 text-gray-400 !important;
+}
+
+/* Ant select and multi-select */
+.ant-select {
+  @apply text-gray-200 !important;
+}
+
+.ant-select .ant-select-selector {
+  @apply transition border-blue-gray-600 bg-blue-gray-600 !important;
+}
+
+.ant-select.ant-select-focused .ant-select-selector {
+  @apply ring ring-blue-gray-600 ring-opacity-25 !important;
+}
+
+.ant-select .ant-select-arrow {
+  @apply text-gray-200 !important;
+}
+
+.ant-select.ant-select-multiple .ant-select-selector .ant-select-selection-item {
+  @apply border-none bg-blue-gray-700 !important;
+}
+
+.ant-select.ant-select-multiple .ant-select-selector .ant-select-selection-item .ant-select-selection-item-remove {
+  @apply text-gray-200 leading-5 !important;
+}
+
+/* Ant select dropdown */
+.ant-select-dropdown {
+  @apply bg-blue-gray-600 !important;
+}
+
+.ant-select-dropdown .ant-select-item {
+  @apply text-gray-200 !important;
+}
+
+.ant-select-dropdown .ant-select-item.ant-select-item-option-active,
+.ant-select-dropdown .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+  @apply bg-blue-gray-700 !important;
+}
+
+/* Table */
+.ant-table .ant-table-container {
+  @apply border-none bg-blue-gray-800 !important;
+}
+
+.ant-table .ant-table-container .ant-table-content .ant-table-thead .ant-table-cell {
+  @apply border-blue-gray-900 bg-blue-gray-800 text-gray-200 !important;
+}
+
+.ant-table .ant-table-container .ant-table-content .ant-table-tbody .ant-table-cell {
+  @apply border-blue-gray-800 bg-blue-gray-700 text-gray-200 !important;
+}

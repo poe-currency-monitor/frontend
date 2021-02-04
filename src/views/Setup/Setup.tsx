@@ -63,7 +63,7 @@ export const SetupView: React.FC = () => {
       stashTabs.data
         ? stashTabs.data.tabs.tabs.map((tab) => (
             <Select.Option key={tab.id} value={tab.id}>
-              {tab.n ? tab.n : '-'} <span className="px-1 text-xs text-gray-600">{tab.type}</span>
+              {tab.n ? tab.n : '-'} <span className="px-1 text-xs text-gray-400">{tab.type}</span>
             </Select.Option>
           ))
         : null,
