@@ -16,7 +16,10 @@ export function useItemsDiff(newValue: { [key: string]: Item[] }, oldValue: { [k
   const oldValueFlat = useMemo(() => Object.values(oldValue).flatMap((e) => e), [oldValue]);
 
   const newItems = useMemo(
-    () => (newValueFlat.length && oldValueFlat.length ? newValueFlat.filter((nv) => !oldValueFlat.includes(nv)) : []),
+    () =>
+      newValueFlat.length && oldValueFlat.length
+        ? newValueFlat.filter((_nv) => oldValueFlat.findIndex((_ov) => _ov.id === _nv.id) === -1)
+        : [],
     [newValueFlat, oldValueFlat],
   );
 
