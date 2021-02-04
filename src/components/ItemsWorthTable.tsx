@@ -15,7 +15,7 @@ export const ItemsWorthTable: React.FC<ItemsWorthTableProps> = ({ items }) => {
         title: '',
         dataIndex: 'image',
         key: 'image',
-        render: (image: string) => <img className="block w-5 h-5" src={image} alt="" />,
+        render: (image: string) => <img className="block w-5 h-5 ml-auto" src={image} alt="" />,
       },
       {
         title: 'Item Name',
