@@ -3,7 +3,9 @@ import { useQuery } from 'react-query';
 import useInterval from '@use-it/interval';
 
 import { Item } from '../../interfaces/poe.interfaces';
+import { Snapshot } from '../../interfaces/snapshot.interfaces';
 import { getStashTabsItems, StashTabsItemsResponse } from '../../API';
+import { SnapshotContext } from '../../contexts/SnapshotContext';
 import { UserContext } from '../../contexts/UserContext';
 import { useLogged } from '../../hooks/use-logged';
 import { useItemsDiff } from '../../hooks/use-items-diff';
@@ -33,6 +35,7 @@ export const DashboardView: React.FC = () => {
   const [poesessid, token, accountName] = useLogged();
 
   const { selectedCharacter, selectedStashTabs, stashTabsItems, setStashTabsItems } = useContext(UserContext);
+  const { snapshots, setSnapshots } = useContext(SnapshotContext);
 
   const league = useMemo(() => (selectedCharacter ? selectedCharacter.league : 'Standard'), [selectedCharacter]);
   const tabIndexes = useMemo(() => selectedStashTabs.map((tab) => tab.i).join(','), [selectedStashTabs]);
@@ -47,8 +50,9 @@ export const DashboardView: React.FC = () => {
   const itemsData = useMemo(() => formatItemsPayload(items.data), [items]);
 
   const itemsDiff = useItemsDiff(itemsData, stashTabsItemsMemo);
-  const { currencyItemsWorth } = useCalculateWorth(itemsData);
-  const itemsWorth = useMemo(() => [...currencyItemsWorth], [currencyItemsWorth]);
+  const itemsDataWorth = useCalculateWorth(itemsData);
+
+  const itemsWorth = useMemo(() => [...itemsDataWorth.currencyItemsWorth], [itemsDataWorth]);
 
   // Initial load of stash-tabs items.
   useEffect(() => {
@@ -61,10 +65,16 @@ export const DashboardView: React.FC = () => {
   // Triggered each time stash-tabs items are fetched and when there are new
   // items between the `UserContext.stashTabsItems` and `query.data.items`.
   useEffect(() => {
-    if (!items.isLoading && items.data && stashTabsItems && itemsDiff) {
-      console.log('stash-tabs items refetched it contains new items', itemsDiff);
+    if (!items.isLoading && items.data && stashTabsItems && itemsDiff.length && itemsWorth.length) {
+      const snapshot: Snapshot = {
+        dateUTC: new Date().toUTCString(),
+        items: [...itemsWorth],
+      };
+
+      setSnapshots([...snapshots, snapshot]);
+      setStashTabsItems(itemsData);
     }
-  }, [items, stashTabsItems, itemsDiff]);
+  }, [items, itemsData, stashTabsItems, itemsDiff, itemsWorth, snapshots, setSnapshots, setStashTabsItems]);
 
   // Initialize interval to load items X seconds.
   useInterval(() => {

@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 
 import { Character, StashTab, Item } from './interfaces/poe.interfaces';
 import { CurrenciesResponse, ItemsResponse } from './interfaces/poe-ninja.interfaces';
+import { Snapshot } from './interfaces/snapshot.interfaces';
 import { RatesContext } from './contexts/RatesContext';
+import { SnapshotContext } from './contexts/SnapshotContext';
 import { UserContext } from './contexts/UserContext';
 
 export const AppState: React.FC = ({ children }) => {
@@ -12,6 +14,8 @@ export const AppState: React.FC = ({ children }) => {
   const [selectedCharacter, setSelectedCharacter] = useState<Character | null>(null);
   const [selectedStashTabs, setSelectedStashTabs] = useState<StashTab[]>([]);
   const [stashTabsItems, setStashTabsItems] = useState<{ [key: string]: Item[] } | null>(null);
+
+  const [snapshots, setSnapshots] = useState<Snapshot[]>([]);
 
   const [currencyRates, setCurrencyRates] = useState<CurrenciesResponse | null>(null);
   const [fragmentRates, setFragmentRates] = useState<CurrenciesResponse | null>(null);
@@ -93,7 +97,7 @@ export const AppState: React.FC = ({ children }) => {
           setVialRates,
         }}
       >
-        {children}
+        <SnapshotContext.Provider value={{ snapshots, setSnapshots }}>{children}</SnapshotContext.Provider>
       </RatesContext.Provider>
     </UserContext.Provider>
   );
