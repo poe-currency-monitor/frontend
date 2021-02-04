@@ -71,7 +71,7 @@ export const DashboardView: React.FC = () => {
         items: [...itemsWorth],
       };
 
-      setSnapshots([...snapshots, snapshot]);
+      setSnapshots([snapshot, ...snapshots]);
       setStashTabsItems(itemsData);
     }
   }, [items, itemsData, stashTabsItems, itemsDiff, itemsWorth, snapshots, setSnapshots, setStashTabsItems]);
