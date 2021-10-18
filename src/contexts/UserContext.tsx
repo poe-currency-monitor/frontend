@@ -6,6 +6,9 @@ export type UserContextType = {
 
   poesessid: string | null;
   setPoesessid: React.Dispatch<React.SetStateAction<string | null>>;
+
+  accountName: string | null;
+  setAccountName: React.Dispatch<React.SetStateAction<string | null>>;
 };
 
 export const UserContext = React.createContext<UserContextType>({
@@ -14,4 +17,7 @@ export const UserContext = React.createContext<UserContextType>({
 
   poesessid: null,
   setPoesessid: () => null,
+
+  accountName: null,
+  setAccountName: () => null,
 });
