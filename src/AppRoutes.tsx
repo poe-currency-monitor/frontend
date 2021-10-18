@@ -2,6 +2,7 @@ import * as React from 'react';
 import { RouteProps, BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 
 import { UserContext } from './contexts/UserContext';
+import { Auth } from './features/auth/Auth';
 
 export type ProtectedRouteProps = RouteProps & {
   component: React.FC;
@@ -35,6 +36,8 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ component: Compo
  */
 export const AppRoutes: React.FC = () => (
   <Router>
-    <Switch>{/* <Route path="/" exact component={Auth} /> */}</Switch>
+    <Switch>
+      <Route path="/" exact component={Auth} />
+    </Switch>
   </Router>
 );
