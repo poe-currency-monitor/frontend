@@ -3,6 +3,7 @@ import Modal from 'react-modal';
 import { useQuery } from 'react-query';
 import { XIcon } from '@heroicons/react/solid';
 
+import { StashTab } from '../../interfaces/poe.interfaces';
 import { getStashTabs } from '../../API';
 import { leagues } from '../../data/leagues';
 import { UserContext } from '../../contexts/UserContext';
@@ -22,9 +23,9 @@ export const CreateProfileModal: React.FC<CreateProfileModalTypes> = ({ isOpen, 
 
   const user = React.useContext(UserContext);
 
-  const [profileName, setProfileName] = React.useState('');
+  const [name, setName] = React.useState('');
   const [league, setLeague] = React.useState<string | null>(null);
-  const [tabs, setTabs] = React.useState<string[]>([]);
+  const [tabs, setTabs] = React.useState<StashTab[]>([]);
 
   const leaguesOptions = React.useMemo(() => leagues.map((l) => ({ value: l.id, label: l.id })), []);
 
@@ -43,10 +44,25 @@ export const CreateProfileModal: React.FC<CreateProfileModalTypes> = ({ isOpen, 
 
   const handleSubmit: React.FormEventHandler = (event) => {
     event.preventDefault();
+
+    if (name && league && tabs.length) {
+      user.setProfiles([
+        ...user.profiles,
+        {
+          league,
+          name,
+          tabs: tabs.map((tab) => ({
+            id: tab.id,
+            name: tab.n,
+            type: tab.type,
+          })),
+        },
+      ]);
+    }
   };
 
   const handleOnChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-    setProfileName(event.target.value);
+    setName(event.target.value);
   };
 
   const handleLeagueChange = (option: SelectOption | null) => {
@@ -58,9 +74,12 @@ export const CreateProfileModal: React.FC<CreateProfileModalTypes> = ({ isOpen, 
   };
 
   const handleTabsChange = (options: MultiSelectOptions) => {
-    if (options.length) {
-      const optionsTabs = options.map((opt) => opt.value);
-      setTabs(optionsTabs);
+    if (fetchTabs.data && options.length) {
+      const fetchedTabs = fetchTabs.data.tabs.tabs;
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const fullTabs = options.map((option) => fetchedTabs.find((tab) => tab.id === option.value)!);
+
+      setTabs([...fullTabs]);
     } else {
       setTabs([]);
     }
