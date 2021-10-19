@@ -8,11 +8,10 @@ export const Auth: React.FC = () => {
   const user = React.useContext(UserContext);
 
   const inputEl = React.useRef<HTMLInputElement | null>(null);
-  const [poesessid, setPoesessid] = React.useState('');
 
   const doLogin = useMutation(['doLogin'], postLogin, {
     onSuccess: (data) => {
-      user.setPoesessid(poesessid);
+      user.setPoesessid(inputEl.current?.value || null);
       user.setToken(data.token);
       user.setAccountName(data.accountName);
     },
@@ -22,7 +21,6 @@ export const Auth: React.FC = () => {
     event.preventDefault();
 
     if (inputEl.current && inputEl.current.value) {
-      setPoesessid(inputEl.current.value);
       doLogin.mutate(inputEl.current.value);
     }
   };
@@ -43,6 +41,7 @@ export const Auth: React.FC = () => {
             id="poesessid"
             type="text"
             placeholder="POESESSID"
+            disabled={doLogin.isLoading}
           />
         </label>
 
