@@ -58,6 +58,8 @@ export const CreateProfileModal: React.FC<CreateProfileModalTypes> = ({ isOpen, 
           })),
         },
       ]);
+
+      onClose();
     }
   };
 
