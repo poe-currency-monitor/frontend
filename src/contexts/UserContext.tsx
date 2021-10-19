@@ -14,6 +14,9 @@ export type UserContextType = {
 
   profiles: Profile[];
   setProfiles: React.Dispatch<React.SetStateAction<Profile[]>>;
+
+  currentProfile: Profile | null;
+  setCurrentProfile: React.Dispatch<React.SetStateAction<Profile | null>>;
 };
 
 export const UserContext = React.createContext<UserContextType>({
@@ -28,4 +31,7 @@ export const UserContext = React.createContext<UserContextType>({
 
   profiles: [],
   setProfiles: () => [],
+
+  currentProfile: null,
+  setCurrentProfile: () => null,
 });

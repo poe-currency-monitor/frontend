@@ -11,13 +11,25 @@ export const AppProvider: React.FC = ({ children }) => {
   const [poesessid, setPoesessid] = React.useState<string | null>(null);
   const [accountName, setAccountName] = React.useState<string | null>(null);
   const [profiles, setProfiles] = React.useState<Profile[]>([]);
+  const [currentProfile, setCurrentProfile] = React.useState<Profile | null>(null);
 
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools />
 
       <UserContext.Provider
-        value={{ token, setToken, poesessid, setPoesessid, accountName, setAccountName, profiles, setProfiles }}
+        value={{
+          token,
+          setToken,
+          poesessid,
+          setPoesessid,
+          accountName,
+          setAccountName,
+          profiles,
+          setProfiles,
+          currentProfile,
+          setCurrentProfile,
+        }}
       >
         {children}
       </UserContext.Provider>
