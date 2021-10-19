@@ -1,12 +1,17 @@
 import * as React from 'react';
 import Modal from 'react-modal';
+import Select from 'react-select';
 import { XIcon } from '@heroicons/react/solid';
+
+import { leagues } from '../../data/leagues';
 
 export type CreateProfileModalTypes = Modal.Props & {
   onClose: () => unknown;
 };
 
 export const CreateProfileModal: React.FC<CreateProfileModalTypes> = ({ isOpen, onClose, ...props }) => {
+  const leaguesOptions = React.useMemo(() => leagues.map((league) => ({ value: league.id, label: league.id })), []);
+
   React.useEffect(() => {
     Modal.setAppElement('#root');
   }, []);
@@ -37,6 +42,12 @@ export const CreateProfileModal: React.FC<CreateProfileModalTypes> = ({ isOpen, 
             placeholder="Profile name"
           />
         </label>
+
+        <div>
+          <p className="mb-1 font-medium">Choose your pricing league</p>
+
+          <Select options={leaguesOptions} />
+        </div>
       </form>
     </Modal>
   );
