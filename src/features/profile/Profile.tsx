@@ -1,10 +1,17 @@
 import * as React from 'react';
 
+import { Profile as ProfileType } from '../../interfaces/profile.interfaces';
 import { UserContext } from '../../contexts/UserContext';
 import { ProfileList } from './ProfileList';
 
 export const Profile: React.FC = () => {
   const user = React.useContext(UserContext);
+
+  const handleDeleteProfile = (profile: ProfileType) => {
+    const newProfiles = user.profiles.filter((p) => p.name !== profile.name);
+
+    user.setProfiles([...newProfiles]);
+  };
 
   return (
     <section>
@@ -12,7 +19,7 @@ export const Profile: React.FC = () => {
 
       <p className="mb-8 text-lg text-center">Select or create the profile you want to use for this session.</p>
 
-      <ProfileList profiles={user.profiles} />
+      <ProfileList profiles={user.profiles} onDeleteProfile={handleDeleteProfile} />
     </section>
   );
 };

@@ -6,9 +6,11 @@ import { CreateProfileModal } from './CreateProfileModal';
 
 export type ProfileListProps = {
   profiles: Profile[];
+
+  onDeleteProfile: (profile: Profile) => unknown;
 };
 
-export const ProfileList: React.FC<ProfileListProps> = ({ profiles }) => {
+export const ProfileList: React.FC<ProfileListProps> = ({ profiles, onDeleteProfile }) => {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
 
   return (
@@ -28,7 +30,7 @@ export const ProfileList: React.FC<ProfileListProps> = ({ profiles }) => {
         </li>
 
         {profiles.map((profile) => (
-          <li className="h-full w-full" key={profile.name}>
+          <li className="relative h-full w-full" key={profile.name}>
             <button
               type="button"
               className="transition flex flex-col items-center justify-center min-h-[192px] h-full w-full px-2 py-4 rounded-md cursor-pointer bg-slate-200 focus:outline-none"
@@ -39,6 +41,14 @@ export const ProfileList: React.FC<ProfileListProps> = ({ profiles }) => {
               <p className="mb-1 text-center text-zinc-700 font-medium text-base">{profile.league} league</p>
 
               <p className="text-center text-zinc-700 font-medium text-sm">{profile.tabs.length} stash-tabs</p>
+            </button>
+
+            <button
+              type="button"
+              className="transition absolute top-0 right-0 mt-2 mr-2 text-red-600 hover:text-red-700"
+              onClick={() => onDeleteProfile(profile)}
+            >
+              <TrashIcon className="w-6 h-auto fill-current" />
             </button>
           </li>
         ))}
