@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactSelect, { Props as ReactSelectProps, MultiValue } from 'react-select';
 
-import { multiSelectStyle } from '../../react-select-theme';
+import { multiSelectStyle } from '../../lib/react-select-theme';
 
 export type MultiSelectOption = {
   label: string;

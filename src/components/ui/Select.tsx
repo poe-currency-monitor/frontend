@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactSelect, { Props as ReactSelectProps } from 'react-select';
 
-import { singleSelectStyle } from '../../react-select-theme';
+import { singleSelectStyle } from '../../lib/react-select-theme';
 
 export type SelectOption = {
   label: string;
