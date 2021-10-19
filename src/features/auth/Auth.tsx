@@ -1,10 +1,13 @@
 import * as React from 'react';
 import { useMutation } from 'react-query';
+import { useHistory } from 'react-router-dom';
 
 import { postLogin } from '../../API';
 import { UserContext } from '../../contexts/UserContext';
 
 export const Auth: React.FC = () => {
+  const history = useHistory();
+
   const user = React.useContext(UserContext);
 
   const inputEl = React.useRef<HTMLInputElement | null>(null);
@@ -14,6 +17,8 @@ export const Auth: React.FC = () => {
       user.setPoesessid(inputEl.current?.value || null);
       user.setToken(data.token);
       user.setAccountName(data.accountName);
+
+      history.push('/profile');
     },
   });
 
