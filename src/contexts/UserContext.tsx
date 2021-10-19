@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import { Profile } from '../interfaces/profile.interfaces';
+
 export type UserContextType = {
   token: string | null;
   setToken: React.Dispatch<React.SetStateAction<string | null>>;
@@ -9,6 +11,9 @@ export type UserContextType = {
 
   accountName: string | null;
   setAccountName: React.Dispatch<React.SetStateAction<string | null>>;
+
+  profiles: Profile[];
+  setProfiles: React.Dispatch<React.SetStateAction<Profile[]>>;
 };
 
 export const UserContext = React.createContext<UserContextType>({
@@ -20,4 +25,7 @@ export const UserContext = React.createContext<UserContextType>({
 
   accountName: null,
   setAccountName: () => null,
+
+  profiles: [],
+  setProfiles: () => [],
 });
