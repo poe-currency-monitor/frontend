@@ -29,17 +29,29 @@ export const Auth: React.FC = () => {
 
   return (
     <section>
-      <h1>PoE Baron Monitor</h1>
+      <h1 className="mt-12 mb-4 leading-tight text-3xl text-center font-bold">PoE Baron Monitor</h1>
 
-      <p>A tool to visualize statistics on your mapping activity.</p>
+      <p className="mb-8 text-lg text-center">A tool to visualize advanced statistics about your mapping activity.</p>
 
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="poesessid">
-          Enter your POESESSID
-          <input ref={inputEl} id="poesessid" type="text" />
+      <form className="flex flex-col max-w-xs mx-auto" onSubmit={handleSubmit}>
+        <label className="flex flex-col mb-4" htmlFor="poesessid">
+          <span className="mb-1 font-medium">Enter your POESESSID</span>
+
+          <input
+            className="transition px-4 py-2 rounded-md text-lg text-zinc-900 font-medium ring-blue-500 focus:outline-none focus:ring placeholder-zinc-400"
+            ref={inputEl}
+            id="poesessid"
+            type="text"
+            placeholder="POESESSID"
+          />
         </label>
 
-        <button type="submit">Login</button>
+        <button
+          className="transition flex items-center justify-center py-2 px-3 rounded-md font-medium text-white bg-blue-500 hover:bg-blue-600"
+          type="submit"
+        >
+          {doLogin.isLoading ? 'Loading...' : 'Login'}
+        </button>
       </form>
     </section>
   );
