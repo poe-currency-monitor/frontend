@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 
 import { postLogin } from '../../API';
 import { UserContext } from '../../contexts/UserContext';
+import { Button } from '../../components/ui/Button';
 
 export const Auth: React.FC = () => {
   const history = useHistory();
@@ -50,12 +51,9 @@ export const Auth: React.FC = () => {
           />
         </label>
 
-        <button
-          className="transition flex items-center justify-center py-2 px-3 rounded-md font-medium text-white bg-blue-500 hover:bg-blue-600"
-          type="submit"
-        >
+        <Button variant="primary" type="submit">
           {doLogin.isLoading ? 'Loading...' : 'Login'}
-        </button>
+        </Button>
       </form>
     </section>
   );
