@@ -28,9 +28,9 @@ const getAuthorizationHeaders = (token: string) => ({
 type QueryParams<T = Record<string, unknown>> = [
   string,
   {
-    accountName?: string;
-    poesessid?: string;
-    token?: string;
+    accountName?: string | null;
+    poesessid?: string | null;
+    token?: string | null;
   } & T,
 ];
 
@@ -57,7 +57,7 @@ export const postLogin = (poesessid: string): Promise<LoginResponse> => {
  * Retrieve a list of stash-tabs from the specified Path of Exile account.
  */
 export const getStashTabs = (
-  params: QueryFunctionContext<QueryParams<{ league?: string }>>,
+  params: QueryFunctionContext<QueryParams<{ league?: string | null }>>,
 ): Promise<StashTabsResponse> => {
   const [, { accountName, poesessid, token, league }] = params.queryKey;
 
