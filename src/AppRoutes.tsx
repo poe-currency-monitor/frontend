@@ -3,7 +3,7 @@ import { RouteProps, BrowserRouter as Router, Switch, Route, Redirect } from 're
 
 import { UserContext } from './contexts/UserContext';
 import { Auth } from './features/auth/Auth';
-import { Profile } from './features/auth/Profile';
+import { Profile } from './features/profile/Profile';
 
 export type ProtectedRouteProps = RouteProps & {
   component: React.FC;
