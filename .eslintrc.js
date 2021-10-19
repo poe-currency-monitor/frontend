@@ -1,5 +1,5 @@
 module.exports = {
-  extends: ['@totominc/react', '@totominc/react/jest'],
+  extends: ['@totominc/react'],
 
   // Add this part if you are using the ESLint config on a TypeScript project
   parserOptions: {
