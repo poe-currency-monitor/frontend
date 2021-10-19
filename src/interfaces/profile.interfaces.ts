@@ -5,6 +5,7 @@ export type ProfileTab = {
 };
 
 export type Profile = {
+  name: string;
   league: string;
   tabs: ProfileTab[];
 };
