@@ -8,9 +8,10 @@ export type ProfileListProps = {
   profiles: Profile[];
 
   onDeleteProfile: (profile: Profile) => unknown;
+  onSelectProfile: (profile: Profile) => unknown;
 };
 
-export const ProfileList: React.FC<ProfileListProps> = ({ profiles, onDeleteProfile }) => {
+export const ProfileList: React.FC<ProfileListProps> = ({ profiles, onDeleteProfile, onSelectProfile }) => {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
 
   return (
@@ -34,7 +35,8 @@ export const ProfileList: React.FC<ProfileListProps> = ({ profiles, onDeleteProf
             <button
               type="button"
               className="transition flex flex-col items-center justify-center min-h-[192px] h-full w-full px-2 py-4 rounded-md cursor-pointer bg-slate-200 focus:outline-none"
-              onKeyPress={(event) => (event.key === 'Enter' ? setIsModalOpen(true) : null)}
+              onKeyPress={(event) => (event.key === 'Enter' ? onSelectProfile(profile) : null)}
+              onClick={() => onSelectProfile(profile)}
             >
               <h3 className="mb-4 text-center text-zinc-900 font-medium text-xl">{profile.name}</h3>
 
