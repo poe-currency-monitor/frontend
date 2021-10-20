@@ -22,8 +22,8 @@ export type UserContextType = {
   stashTabs: StashTab[];
   setStashTabs: React.Dispatch<React.SetStateAction<StashTab[]>>;
 
-  stashTabsItems: StashTabsItems[];
-  setStashTabsItems: React.Dispatch<React.SetStateAction<StashTabsItems[]>>;
+  stashTabsItems: StashTabsItems;
+  setStashTabsItems: React.Dispatch<React.SetStateAction<StashTabsItems>>;
 };
 
 export const UserContext = React.createContext<UserContextType>({
@@ -45,6 +45,6 @@ export const UserContext = React.createContext<UserContextType>({
   stashTabs: [],
   setStashTabs: () => [],
 
-  stashTabsItems: [],
-  setStashTabsItems: () => [],
+  stashTabsItems: {},
+  setStashTabsItems: () => {},
 });

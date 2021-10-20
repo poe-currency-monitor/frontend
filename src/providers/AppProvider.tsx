@@ -16,7 +16,7 @@ export const AppProvider: React.FC = ({ children }) => {
   const [profiles, setProfiles] = React.useState<Profile[]>([]);
   const [currentProfile, setCurrentProfile] = React.useState<Profile | null>(null);
   const [stashTabs, setStashTabs] = React.useState<StashTab[]>([]);
-  const [stashTabsItems, setStashTabsItems] = React.useState<StashTabsItems[]>([]);
+  const [stashTabsItems, setStashTabsItems] = React.useState<StashTabsItems>({});
 
   const [currencyRates, setCurrencyRates] = React.useState<CurrenciesResponse | null>(null);
   const [fragmentRates, setFragmentRates] = React.useState<CurrenciesResponse | null>(null);
