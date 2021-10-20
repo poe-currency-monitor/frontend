@@ -1,4 +1,4 @@
-import { StashTab } from './poe.interfaces';
+import { StashTab, Item } from './poe.interfaces';
 
 /**
  * API response from `/auth` endpoint.
@@ -13,5 +13,15 @@ export type StashTabsResponse = {
   tabs: {
     numTabs: number;
     tabs: StashTab[];
+  };
+};
+
+export type StashTabsItemsResponse = {
+  accountName: string;
+  items: {
+    [key: string]: {
+      tabIndex: number;
+      items: Item[];
+    };
   };
 };

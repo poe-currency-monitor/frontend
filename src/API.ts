@@ -1,6 +1,6 @@
 import { QueryFunctionContext } from 'react-query';
 
-import { LoginResponse, StashTabsResponse } from './interfaces/api.interfaces';
+import { LoginResponse, StashTabsResponse, StashTabsItemsResponse } from './interfaces/api.interfaces';
 import { AllCurrenciesRatesResponse, AllItemsRatesResponse } from './interfaces/poe-ninja.interfaces';
 
 const ENDPOINT = import.meta.env.PROD ? 'https://totominc.io/api' : 'http://localhost:4000/api';
@@ -75,6 +75,33 @@ export const getStashTabs = (
     }
 
     return response.json() as Promise<StashTabsResponse>;
+  });
+};
+
+/**
+ * Retrieve a list of stash-tabs items from the specified Path of Exile
+ * account and stash-tabs.
+ */
+export const getStashTabsItems = (
+  params: QueryFunctionContext<QueryParams<{ league?: string | null; tabsIndexes: string }>>,
+): Promise<StashTabsItemsResponse> => {
+  const [, { accountName, poesessid, token, tabsIndexes, league }] = params.queryKey;
+
+  if (!accountName || !poesessid || !token || !tabsIndexes || !league) {
+    throw new Error(UNDEFINED_VALUES_ERROR_MESSAGE);
+  }
+
+  const url = `${ENDPOINT}/poe/${accountName}/stash-items/?poesessid=${poesessid}&league=${league}&tabIndex=${tabsIndexes}&realm=pc`;
+
+  return fetch(url, {
+    method: 'GET',
+    headers: { ...getAuthorizationHeaders(token) },
+  }).then((response) => {
+    if (!response.ok) {
+      throw new Error(`Unable to retrieve stash-tabs items: error ${response.status}`);
+    }
+
+    return response.json() as Promise<StashTabsItemsResponse>;
   });
 };
 
