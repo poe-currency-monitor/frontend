@@ -63,3 +63,9 @@ export type Item = {
   flavourText: string[];
   artFilename: string;
 };
+
+/**
+ * Type of the `tabsItems` in the UserContext. The key is the `id` of a
+ * `StashTab`.
+ */
+export type StashTabsItems = { [key: string]: Item[] };
