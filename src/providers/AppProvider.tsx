@@ -3,6 +3,7 @@ import { QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 
 import { Profile } from '../interfaces/profile.interfaces';
+import { StashTab, StashTabsItems } from '../interfaces/poe.interfaces';
 import { CurrenciesResponse, ItemsResponse } from '../interfaces/poe-ninja.interfaces';
 import { queryClient } from '../lib/react-query';
 import { UserContext } from '../contexts/UserContext';
@@ -14,6 +15,8 @@ export const AppProvider: React.FC = ({ children }) => {
   const [accountName, setAccountName] = React.useState<string | null>(null);
   const [profiles, setProfiles] = React.useState<Profile[]>([]);
   const [currentProfile, setCurrentProfile] = React.useState<Profile | null>(null);
+  const [stashTabs, setStashTabs] = React.useState<StashTab[]>([]);
+  const [stashTabsItems, setStashTabsItems] = React.useState<StashTabsItems[]>([]);
 
   const [currencyRates, setCurrencyRates] = React.useState<CurrenciesResponse | null>(null);
   const [fragmentRates, setFragmentRates] = React.useState<CurrenciesResponse | null>(null);
@@ -59,6 +62,10 @@ export const AppProvider: React.FC = ({ children }) => {
           setProfiles,
           currentProfile,
           setCurrentProfile,
+          stashTabs,
+          setStashTabs,
+          stashTabsItems,
+          setStashTabsItems,
         }}
       >
         <RatesContext.Provider
