@@ -1,6 +1,7 @@
 import { QueryFunctionContext } from 'react-query';
 
 import { LoginResponse, StashTabsResponse } from './interfaces/api.interfaces';
+import { AllCurrenciesRatesResponse, AllItemsRatesResponse } from './interfaces/poe-ninja.interfaces';
 
 const ENDPOINT = import.meta.env.PROD ? 'https://totominc.io/api' : 'http://localhost:4000/api';
 
@@ -74,5 +75,53 @@ export const getStashTabs = (
     }
 
     return response.json() as Promise<StashTabsResponse>;
+  });
+};
+
+/**
+ * Retrieve all currencies-rates from poe.ninja API.
+ */
+export const getAllCurrenciesRates = (
+  params: QueryFunctionContext<QueryParams<{ league?: string | null }>>,
+): Promise<AllCurrenciesRatesResponse> => {
+  const [, { league, token }] = params.queryKey;
+
+  if (!league || !token) {
+    throw new Error(UNDEFINED_VALUES_ERROR_MESSAGE);
+  }
+
+  return fetch(`${ENDPOINT}/poe-ninja/all-currencies-rates/?league=${league}&language=en`, {
+    method: 'GET',
+    headers: { ...getAuthorizationHeaders(token) },
+  }).then((response) => {
+    if (!response.ok) {
+      throw new Error(`Unable to retrieve all currencies-rates: error ${response.status}`);
+    }
+
+    return response.json() as Promise<AllCurrenciesRatesResponse>;
+  });
+};
+
+/**
+ * Retrieve all items-rates from poe.ninja API.
+ */
+export const getAllItemsRates = (
+  params: QueryFunctionContext<QueryParams<{ league?: string | null }>>,
+): Promise<AllItemsRatesResponse> => {
+  const [, { league, token }] = params.queryKey;
+
+  if (!league || !token) {
+    throw new Error(UNDEFINED_VALUES_ERROR_MESSAGE);
+  }
+
+  return fetch(`${ENDPOINT}/poe-ninja/all-items-rates/?league=${league}&language=en`, {
+    method: 'GET',
+    headers: { ...getAuthorizationHeaders(token) },
+  }).then((response) => {
+    if (!response.ok) {
+      throw new Error(`Unable to retrieve all items-rates: error ${response.status}`);
+    }
+
+    return response.json() as Promise<AllItemsRatesResponse>;
   });
 };
