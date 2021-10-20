@@ -83,7 +83,7 @@ export const getStashTabs = (
  * account and stash-tabs.
  */
 export const getStashTabsItems = (
-  params: QueryFunctionContext<QueryParams<{ league?: string | null; tabsIndexes: string }>>,
+  params: QueryFunctionContext<QueryParams<{ league?: string | null; tabsIndexes?: string | null }>>,
 ): Promise<StashTabsItemsResponse> => {
   const [, { accountName, poesessid, token, tabsIndexes, league }] = params.queryKey;
 
