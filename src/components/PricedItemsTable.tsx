@@ -1,17 +1,18 @@
 import * as React from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow } from '@material-ui/core';
 
-import { Item } from '../interfaces/poe.interfaces';
+import { Item, StashTabsItems } from '../interfaces/poe.interfaces';
 import { RatesContext } from '../contexts/RatesContext';
 import { PricedItem, priceItem } from '../lib/item-pricing';
 import { Input } from './ui/Input';
 
 export type PricedItemsTableProps = {
   className?: string;
-  items: Item[];
+  items: StashTabsItems;
 };
 
 export type PricedItemsTableFormattedItem = Item & {
+  tabId: string;
   price: PricedItem;
   imageUrl: string;
 };
@@ -23,18 +24,28 @@ export const PricedItemsTable: React.FC<PricedItemsTableProps> = ({ children, cl
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
+  // Format all items from `{ [tabId: string]: Item[] }` into `Item[]` but keep
+  // a reference to the item stash-tab ID so we can filter it later.
   const formattedItems = React.useMemo<PricedItemsTableFormattedItem[]>(() => {
-    return items.map((item) => {
-      const price = priceItem(item, rates);
+    const allStashTabsItems: PricedItemsTableFormattedItem[] = [];
 
-      return {
-        ...item,
-        price,
-        imageUrl: item.icon.split('?')[0],
-      };
+    Object.entries(items).forEach(([tabId, tabItems]) => {
+      tabItems.forEach((item) => {
+        const price = priceItem(item, rates);
+
+        allStashTabsItems.push({
+          ...item,
+          tabId,
+          price,
+          imageUrl: item.icon.split('?')[0],
+        });
+      });
     });
-  }, [items, rates]);
 
+    return allStashTabsItems;
+  }, [rates, items]);
+
+  // Advanced filtering stuff goes here, filter items from search input.
   const filteredItems = React.useMemo<PricedItemsTableFormattedItem[]>(() => {
     const searchMatchedItems = search
       ? formattedItems.filter((item) => `${item.baseType} ${item.name}`.toLowerCase().includes(search.toLowerCase()))
