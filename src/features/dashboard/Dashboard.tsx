@@ -14,7 +14,7 @@ export const Dashboard: React.FC = () => {
       <h1 className="mb-6 leading-tight text-3xl font-bold">Dashboard</h1>
 
       {/* TODO: let user select a specific stash-tab */}
-      <PricedItemsTable items={tabsItems}>
+      <PricedItemsTable className="p-6 rounded-md bg-zinc-700" items={tabsItems}>
         <h1 className="mb-4 leading-tight text-2xl font-bold">Stash-tabs overview</h1>
       </PricedItemsTable>
     </section>
