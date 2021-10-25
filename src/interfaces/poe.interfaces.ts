@@ -11,6 +11,18 @@ type ItemProperty = {
   type: number;
 };
 
+type ItemRequirement = {
+  displayMode: number;
+  name: string;
+  values: [string, number][];
+};
+
+type ItemSocket = {
+  group: number;
+  attr: string;
+  sColour: string;
+};
+
 export type League = {
   id: string;
   realm: string;
@@ -40,28 +52,39 @@ export type StashTab = {
 };
 
 export type Item = {
-  baseType: string;
-  verified: boolean;
-  w: number;
-  h: number;
-  icon: string;
-  stackSize: number;
-  maxStackSize: number;
-  league: string;
   id: string;
+  inventoryId: string;
+  verified: boolean;
   name: string;
   typeLine: string;
+  frameType: number;
+  baseType: string;
+  descrText: string;
+  flavourText: string[];
+  league: string;
   identified: boolean;
   ilvl: number;
-  properties: ItemProperty[];
-  explicitMods: string[];
-  descrText: string;
-  frameType: number;
+  stackSize: number;
+  maxStackSize: number;
+  corrupted?: boolean;
+  w: number;
+  h: number;
   x: number;
   y: number;
-  inventoryId: string;
-  flavourText: string[];
+  icon: string;
   artFilename: string;
+  properties: ItemProperty[];
+  explicitMods: string[];
+  implicitMods?: string[];
+  enchantMods?: string[];
+  craftedMods?: string[];
+  utilityMods?: string[];
+  requirements?: ItemRequirement[];
+  sockets?: ItemSocket[];
+  scourgeMods?: string[];
+  sourged?: {
+    tier: number;
+  };
 };
 
 /**
