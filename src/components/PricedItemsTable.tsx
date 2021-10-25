@@ -4,8 +4,10 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TablePagination
 import { Item } from '../interfaces/poe.interfaces';
 import { RatesContext } from '../contexts/RatesContext';
 import { PricedItem, priceItem } from '../lib/item-pricing';
+import { Input } from './ui/Input';
 
 export type PricedItemsTableProps = {
+  className?: string;
   items: Item[];
 };
 
@@ -14,9 +16,10 @@ export type PricedItemsTableFormattedItem = Item & {
   imageUrl: string;
 };
 
-export const PricedItemsTable: React.FC<PricedItemsTableProps> = ({ children, items }) => {
+export const PricedItemsTable: React.FC<PricedItemsTableProps> = ({ children, className, items }) => {
   const rates = React.useContext(RatesContext);
 
+  const [search, setSearch] = React.useState('');
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -32,6 +35,14 @@ export const PricedItemsTable: React.FC<PricedItemsTableProps> = ({ children, it
     });
   }, [items, rates]);
 
+  const filteredItems = React.useMemo<PricedItemsTableFormattedItem[]>(() => {
+    const searchMatchedItems = search
+      ? formattedItems.filter((item) => `${item.baseType} ${item.name}`.toLowerCase().includes(search.toLowerCase()))
+      : formattedItems;
+
+    return searchMatchedItems;
+  }, [formattedItems, search]);
+
   const handleChangeRowsPerPage: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10) || 10);
     setPage(0);
@@ -41,9 +52,16 @@ export const PricedItemsTable: React.FC<PricedItemsTableProps> = ({ children, it
     setPage(newPage);
   };
 
+  const handleSearchOnChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+    setSearch(event.target.value);
+    setPage(0);
+  };
+
   return (
-    <div>
+    <div className={className}>
       {children}
+
+      <Input htmlFor="search" type="text" placeholder="Filter items table" onChange={handleSearchOnChange} />
 
       <TableContainer className="rounded-md bg-blue-gray-700" classes={{ root: 'mb-4 bg-slate-100' }}>
         <Table size="medium">
@@ -80,7 +98,7 @@ export const PricedItemsTable: React.FC<PricedItemsTableProps> = ({ children, it
           </TableHead>
 
           <TableBody>
-            {formattedItems.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
+            {filteredItems.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
               <TableRow key={row.id}>
                 <TableCell className="!font-inter !font-normal !border-blue-gray-600">
                   <img className="h-6 w-auto" src={row.imageUrl} alt="" />
@@ -128,7 +146,7 @@ export const PricedItemsTable: React.FC<PricedItemsTableProps> = ({ children, it
           caption: '!font-inter',
           input: '!font-inter',
         }}
-        count={formattedItems.length}
+        count={filteredItems.length}
         page={page}
         rowsPerPage={rowsPerPage}
         rowsPerPageOptions={[5, 10, 25, 50]}
