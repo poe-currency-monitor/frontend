@@ -14,13 +14,10 @@ export const Profile: React.FC = () => {
 
   const user = React.useContext(UserContext);
 
-  const tabsIndexes = React.useMemo<string>(() => {
-    const filteredFullStashTabs = user.stashTabs.filter((stashTab) =>
-      user.currentProfile?.tabs.find((profileTab) => profileTab.id === stashTab.id),
-    );
-
-    return filteredFullStashTabs.map((stashTab) => stashTab.i).join('');
-  }, [user.stashTabs, user.currentProfile]);
+  const tabsIndexes = React.useMemo<string>(
+    () => user.stashTabs.map((stashTab) => stashTab.i).join(','),
+    [user.stashTabs],
+  );
 
   const { fetchCurrenciesRates, fetchItemsRates } = useLoadRates(user.token, user.currentProfile?.league);
 
