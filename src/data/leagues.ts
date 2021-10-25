@@ -61,4 +61,63 @@ export const leagues: League[] = [
       { id: 'NoParties', name: 'Solo', description: 'You may not party in this league.' },
     ],
   },
+  {
+    id: 'Scourge',
+    realm: 'pc',
+    url: 'https://www.pathofexile.com/forum/view-thread/3188271',
+    startAt: '2021-10-22T19:00:00Z',
+    endAt: '2025-12-07T22:00:00Z',
+    description:
+      'Defeat The Scourge in an alternate Wraeclast to create powerful corrupted items.\n\nThis is the default Path of Exile league.',
+    registerAt: '2021-10-22T16:30:00Z',
+    delveEvent: true,
+    rules: [],
+  },
+  {
+    id: 'Hardcore Scourge',
+    realm: 'pc',
+    url: 'https://www.pathofexile.com/forum/view-thread/3188272',
+    startAt: '2021-10-22T19:00:00Z',
+    endAt: '2025-12-07T22:00:00Z',
+    description:
+      'Defeat The Scourge in an alternate Wraeclast to create powerful corrupted items.\n\nA character killed in Hardcore Scourge becomes a Standard character.',
+    registerAt: '2021-10-22T16:30:00Z',
+    delveEvent: true,
+    rules: [
+      {
+        id: 'Hardcore',
+        name: 'Hardcore',
+        description: 'A character killed in Hardcore is moved to its parent league.',
+      },
+    ],
+  },
+  {
+    id: 'SSF Scourge',
+    realm: 'pc',
+    url: 'https://www.pathofexile.com/forum/view-thread/3188274',
+    startAt: '2021-10-22T19:00:00Z',
+    endAt: '2025-12-07T22:00:00Z',
+    description: 'SSF Scourge',
+    registerAt: '2021-10-22T16:30:00Z',
+    delveEvent: true,
+    rules: [{ id: 'NoParties', name: 'Solo', description: 'You may not party in this league.' }],
+  },
+  {
+    id: 'SSF Scourge HC',
+    realm: 'pc',
+    url: 'https://www.pathofexile.com/forum/view-thread/3188275',
+    startAt: '2021-10-22T19:00:00Z',
+    endAt: '2025-12-07T22:00:00Z',
+    description: 'SSF HC Scourge',
+    registerAt: '2021-10-22T16:30:00Z',
+    delveEvent: true,
+    rules: [
+      {
+        id: 'Hardcore',
+        name: 'Hardcore',
+        description: 'A character killed in Hardcore is moved to its parent league.',
+      },
+      { id: 'NoParties', name: 'Solo', description: 'You may not party in this league.' },
+    ],
+  },
 ];
