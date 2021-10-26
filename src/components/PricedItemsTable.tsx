@@ -1,13 +1,14 @@
 import * as React from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow } from '@material-ui/core';
 
-import { Item, StashTabsItems } from '../interfaces/poe.interfaces';
+import { Item, StashTab, StashTabsItems } from '../interfaces/poe.interfaces';
 import { RatesContext } from '../contexts/RatesContext';
 import { PricedItem, priceItem } from '../lib/item-pricing';
 import { Input } from './ui/Input';
 
 export type PricedItemsTableProps = {
   className?: string;
+  tabs: StashTab[];
   items: StashTabsItems;
 };
 
@@ -17,7 +18,7 @@ export type PricedItemsTableFormattedItem = Item & {
   imageUrl: string;
 };
 
-export const PricedItemsTable: React.FC<PricedItemsTableProps> = ({ children, className, items }) => {
+export const PricedItemsTable: React.FC<PricedItemsTableProps> = ({ children, className, tabs, items }) => {
   const rates = React.useContext(RatesContext);
 
   const [search, setSearch] = React.useState('');
@@ -29,21 +30,23 @@ export const PricedItemsTable: React.FC<PricedItemsTableProps> = ({ children, cl
   const formattedItems = React.useMemo<PricedItemsTableFormattedItem[]>(() => {
     const allStashTabsItems: PricedItemsTableFormattedItem[] = [];
 
-    Object.entries(items).forEach(([tabId, tabItems]) => {
-      tabItems.forEach((item) => {
-        const price = priceItem(item, rates);
+    Object.entries(items)
+      .filter(([tabId]) => tabs.find((tab) => tab.id === tabId))
+      .forEach(([tabId, tabItems]) => {
+        tabItems.forEach((item) => {
+          const price = priceItem(item, rates);
 
-        allStashTabsItems.push({
-          ...item,
-          tabId,
-          price,
-          imageUrl: item.icon.split('?')[0],
+          allStashTabsItems.push({
+            ...item,
+            tabId,
+            price,
+            imageUrl: item.icon.split('?')[0],
+          });
         });
       });
-    });
 
     return allStashTabsItems;
-  }, [rates, items]);
+  }, [rates, items, tabs]);
 
   // Advanced filtering stuff goes here, filter items from search input.
   const filteredItems = React.useMemo<PricedItemsTableFormattedItem[]>(() => {
