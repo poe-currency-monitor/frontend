@@ -5,6 +5,7 @@ import { Item, StashTab, StashTabsItems } from '../interfaces/poe.interfaces';
 import { RatesContext } from '../contexts/RatesContext';
 import { PricedItem, priceItem } from '../lib/item-pricing';
 import { Input } from './ui/Input';
+import { MultiSelect, MultiSelectOption, MultiSelectOptions } from './ui/MultiSelect';
 
 export type PricedItemsTableProps = {
   className?: string;
@@ -21,9 +22,15 @@ export type PricedItemsTableFormattedItem = Item & {
 export const PricedItemsTable: React.FC<PricedItemsTableProps> = ({ children, className, tabs, items }) => {
   const rates = React.useContext(RatesContext);
 
+  const [selectedTabs, setSelectedTabs] = React.useState<string[]>([]);
   const [search, setSearch] = React.useState('');
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+  const tabsOptions = React.useMemo<MultiSelectOption[]>(
+    () => tabs.map((tab) => ({ label: tab.n, value: tab.id })),
+    [tabs],
+  );
 
   // Format all items from `{ [tabId: string]: Item[] }` into `Item[]` but keep
   // a reference to the item stash-tab ID so we can filter it later.
@@ -54,8 +61,13 @@ export const PricedItemsTable: React.FC<PricedItemsTableProps> = ({ children, cl
       ? formattedItems.filter((item) => `${item.baseType} ${item.name}`.toLowerCase().includes(search.toLowerCase()))
       : formattedItems;
 
-    return searchMatchedItems;
-  }, [formattedItems, search]);
+    const tabsMatchedItems =
+      selectedTabs.length > 0
+        ? searchMatchedItems.filter((item) => selectedTabs.includes(item.tabId))
+        : searchMatchedItems;
+
+    return tabsMatchedItems;
+  }, [formattedItems, search, selectedTabs]);
 
   const handleChangeRowsPerPage: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10) || 10);
@@ -71,11 +83,36 @@ export const PricedItemsTable: React.FC<PricedItemsTableProps> = ({ children, cl
     setPage(0);
   };
 
+  const handleTabsChange = (options: MultiSelectOptions) => {
+    if (options.length) {
+      setSelectedTabs([...options.map((option) => option.value)]);
+    } else {
+      setSelectedTabs([]);
+    }
+
+    setPage(0);
+  };
+
   return (
     <div className={className}>
       {children}
 
-      <Input htmlFor="search" type="text" placeholder="Filter items table" onChange={handleSearchOnChange} />
+      <div className="flex w-full space-x-4">
+        <Input
+          labelClassName="w-1/2"
+          htmlFor="search"
+          type="text"
+          placeholder="Filter by item name..."
+          onChange={handleSearchOnChange}
+        />
+
+        <MultiSelect
+          options={tabsOptions}
+          placeholder="Filter by stash-tab..."
+          onChange={handleTabsChange}
+          className="w-1/2"
+        />
+      </div>
 
       <TableContainer className="rounded-md bg-blue-gray-700" classes={{ root: 'mb-4 bg-slate-100' }}>
         <Table size="medium">
