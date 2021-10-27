@@ -1,15 +1,17 @@
 import React from 'react';
+import clsx from 'clsx';
 
 export type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   htmlFor: string;
+  labelClassName?: string;
 };
 
 /**
  * An accessible `<input />` element that is wrapped inside a `<label />`.
  */
-export const Input: React.FC<InputProps> = ({ children, htmlFor, type = 'text', id, ...props }) => (
-  <label className="flex flex-col mb-4" htmlFor={htmlFor}>
-    <span className="mb-1 font-medium">{children}</span>
+export const Input: React.FC<InputProps> = ({ children, htmlFor, type = 'text', id, labelClassName, ...props }) => (
+  <label className={clsx('flex flex-col mb-4', labelClassName)} htmlFor={htmlFor}>
+    {children && <span className="mb-1 font-medium">{children}</span>}
 
     <input
       type={type}
