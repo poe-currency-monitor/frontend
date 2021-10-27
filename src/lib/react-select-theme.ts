@@ -30,7 +30,7 @@ export const singleSelectStyle: StylesConfig<OptionType, false> = {
 
   valueContainer: (provided) => ({
     ...provided,
-    padding: '0.5rem 1rem',
+    padding: '0.25rem 1rem',
   }),
 
   indicatorSeparator: (provided) => ({
@@ -91,7 +91,7 @@ export const multiSelectStyle: StylesConfig<OptionType, true> = {
 
   valueContainer: (provided) => ({
     ...provided,
-    padding: '0.5rem 1rem',
+    padding: '0.25rem 1rem',
   }),
 
   indicatorSeparator: (provided) => ({
