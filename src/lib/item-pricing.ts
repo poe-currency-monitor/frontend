@@ -72,5 +72,15 @@ export function priceItem(item: Item, rates: RatesContextType): PricedItem {
     }
   }
 
+  // Price blight oil items.
+  if (rates.oilRates && item.frameType === 5) {
+    const oilRate = rates.oilRates.lines.find((line) => line.name === item.typeLine);
+
+    if (oilRate) {
+      itemValue.unit = oilRate.chaosValue;
+      itemValue.total = oilRate.chaosValue * (item.stackSize || 1);
+    }
+  }
+
   return itemValue;
 }
