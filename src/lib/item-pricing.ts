@@ -26,6 +26,9 @@ export function priceItem(item: Item, rates: RatesContextType): PricedItem {
     if (currencyRate) {
       itemValue.unit = currencyRate.chaosEquivalent;
       itemValue.total = currencyRate.chaosEquivalent * (item.stackSize || 1);
+    } else if (item.typeLine === 'Chaos Orb') {
+      itemValue.unit = 1;
+      itemValue.total = item.stackSize || 0;
     }
   }
 
