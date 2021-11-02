@@ -52,5 +52,25 @@ export function priceItem(item: Item, rates: RatesContextType): PricedItem {
     }
   }
 
+  // Price a fragment item.
+  if (rates.fragmentRates && (item.frameType === 5 || item.frameType === 0)) {
+    const fragmentRate = rates.fragmentRates.lines.find((line) => line.currencyTypeName === item.typeLine);
+
+    if (fragmentRate) {
+      itemValue.unit = fragmentRate.chaosEquivalent;
+      itemValue.total = fragmentRate.chaosEquivalent * (item.stackSize || 1);
+    }
+  }
+
+  // Price a scarab fragment item.
+  if (rates.scarabRates && item.frameType === 0) {
+    const scarabRate = rates.scarabRates.lines.find((line) => line.name === item.typeLine);
+
+    if (scarabRate) {
+      itemValue.unit = scarabRate.chaosValue;
+      itemValue.total = scarabRate.chaosValue * (item.stackSize || 1);
+    }
+  }
+
   return itemValue;
 }
