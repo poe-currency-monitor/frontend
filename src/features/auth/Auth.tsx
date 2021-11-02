@@ -33,12 +33,12 @@ export const Auth: React.FC = () => {
   };
 
   return (
-    <section>
+    <section className="max-w-xl mx-auto">
       <h1 className="mt-12 mb-4 leading-tight text-3xl text-center font-bold">PoE Baron Monitor</h1>
 
       <p className="mb-8 text-lg text-center">A tool to visualize advanced statistics about your mapping activity.</p>
 
-      <form className="flex flex-col max-w-xs mx-auto" onSubmit={handleSubmit}>
+      <form className="flex flex-col max-w-xs mx-auto mb-8" onSubmit={handleSubmit}>
         <Input
           htmlFor="poesessid"
           type="text"
@@ -53,6 +53,25 @@ export const Auth: React.FC = () => {
           {doLogin.isLoading ? 'Loading...' : 'Login'}
         </Button>
       </form>
+
+      <p className="mb-4 font-medium text-lg">Why is the POESESSID required for this tool?</p>
+
+      <p className="mb-2">
+        Your <b>POESESSID</b> is used to access to your list of characters and stash-tabs with their items. The tool
+        will send a request to the web-service powering this tool in order to send data such as characters, stash-tabs
+        and their content.
+      </p>
+
+      <p className="mb-4">
+        <b>Your token is never stored by the web-service</b>, it is read-only by the web-service.
+      </p>
+
+      <p className="mb-4 font-medium text-lg">Why are you not using Path of Exile official OAuth API?</p>
+
+      <p>
+        Because their OAuth API currently doesn&apos;t support stash-tabs and their content, so we need to use the old
+        method which uses <b>the POESESSID</b>.
+      </p>
     </section>
   );
 };
