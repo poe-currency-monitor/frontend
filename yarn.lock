@@ -810,10 +810,10 @@
   resolved "https://registry.yarnpkg.com/@tootallnate/once/-/once-1.1.2.tgz#ccb91445360179a04e7fe6aff78c00ffc1eeaf82"
   integrity sha512-RbzJvlNzmRq5c3O09UipeuXno4tA1FE6ikOjxZK0tuxVv3412l64l5t1W5pj4+rJq9vpkm/kwiR07aZXnsKPxw==
 
-"@totominc/eslint-config-react@^0.4.5":
-  version "0.4.5"
-  resolved "https://registry.yarnpkg.com/@totominc/eslint-config-react/-/eslint-config-react-0.4.5.tgz#afeedcda4130b90444c89602a824b5781d26fdcf"
-  integrity sha512-eI6lRWQMxtQV6Zd86Xfs8pYa3et5XCNJQvHk2HZzYqhyIhTEMJmpLUHzp899t8nwQj40KnWa6gNMt2DB/UScPA==
+"@totominc/eslint-config-react@^0.4.7":
+  version "0.4.7"
+  resolved "https://registry.yarnpkg.com/@totominc/eslint-config-react/-/eslint-config-react-0.4.7.tgz#8cdaa4697dfc04d8cd78604aaf7bce99b9c3cf95"
+  integrity sha512-F2CtTAnIE7y4/OK3QwX/KhNR9O5za+6UqYxywcqhTkkLqW+g3ZrmszPuWT3l//KDntrJ9WfzMK0Rxjn83WVtRA==
   dependencies:
     confusing-browser-globals "^1.0.10"
 
