@@ -1,5 +1,14 @@
 import * as React from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow } from '@material-ui/core';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TablePagination,
+  TableRow,
+  TableSortLabel,
+} from '@material-ui/core';
 
 import { Item, StashTab, StashTabsItems } from '../interfaces/poe.interfaces';
 import { RatesContext } from '../contexts/RatesContext';
@@ -19,6 +28,67 @@ export type PricedItemsTableFormattedItem = Item & {
   imageUrl: string;
 };
 
+enum OrderBy {
+  Name = 'item-name',
+  Quantity = 'quantity',
+  ItemLevel = 'ilvl',
+  UnitPrice = 'unit-price',
+  TotalValue = 'total-value',
+}
+
+/**
+ * A function that compares 2 items with the properties from `OrderBy` enum.
+ *
+ * @param a First item to compare
+ * @param b Second item to compare
+ * @param orderBy Property to use to compare items.
+ */
+function descendingComparator(a: PricedItemsTableFormattedItem, b: PricedItemsTableFormattedItem, orderBy: OrderBy) {
+  if (orderBy === OrderBy.Name) {
+    return (a.typeLine || a.baseType).localeCompare(b.typeLine || b.baseType);
+  }
+
+  if (orderBy === OrderBy.Quantity) {
+    return b.stackSize - a.stackSize;
+  }
+
+  if (orderBy === OrderBy.ItemLevel) {
+    return b.ilvl - a.ilvl;
+  }
+
+  if (orderBy === OrderBy.UnitPrice || orderBy === OrderBy.TotalValue) {
+    const aValue = orderBy === OrderBy.UnitPrice ? a.price.unit : a.price.total;
+    const bValue = orderBy === OrderBy.UnitPrice ? b.price.unit : b.price.total;
+
+    if (aValue < bValue) {
+      return -1;
+    }
+
+    if (aValue > bValue) {
+      return 1;
+    }
+  }
+
+  return 0;
+}
+
+/**
+ * Call `descendingComparator` with positive or negative depending on `order`.
+ *
+ * @param a First item to compare
+ * @param b Second item to compare
+ * @param order Ordering key
+ * @param orderBy Property to use to compare items.
+ */
+function getComparator(
+  a: PricedItemsTableFormattedItem,
+  b: PricedItemsTableFormattedItem,
+  order: 'asc' | 'desc',
+  orderBy: OrderBy,
+) {
+  return order === 'desc' ? descendingComparator(a, b, orderBy) : -descendingComparator(a, b, orderBy);
+}
+
 export const PricedItemsTable: React.FC<PricedItemsTableProps> = ({ children, className, tabs, items }) => {
   const rates = React.useContext(RatesContext);
 
@@ -26,6 +96,8 @@ export const PricedItemsTable: React.FC<PricedItemsTableProps> = ({ children, cl
   const [search, setSearch] = React.useState('');
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [orderBy, setOrderBy] = React.useState<OrderBy>(OrderBy.TotalValue);
+  const [order, setOrder] = React.useState<'asc' | 'desc'>('asc');
 
   const tabsOptions = React.useMemo<MultiSelectOption[]>(
     () => tabs.map((tab) => ({ label: tab.n, value: tab.id })),
@@ -69,6 +141,12 @@ export const PricedItemsTable: React.FC<PricedItemsTableProps> = ({ children, cl
     return tabsMatchedItems;
   }, [formattedItems, search, selectedTabs]);
 
+  // After advanced item filtering, sort the items.
+  const sortedItems = React.useMemo<PricedItemsTableFormattedItem[]>(
+    () => filteredItems.sort((a, b) => getComparator(a, b, order, orderBy)),
+    [filteredItems, order, orderBy],
+  );
+
   const handleChangeRowsPerPage: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10) || 10);
     setPage(0);
@@ -90,6 +168,14 @@ export const PricedItemsTable: React.FC<PricedItemsTableProps> = ({ children, cl
       setSelectedTabs([]);
     }
 
+    setPage(0);
+  };
+
+  const handleSortChange = (property: OrderBy): void => {
+    const isAsc = orderBy === property && order === 'asc';
+
+    setOrder(isAsc ? 'desc' : 'asc');
+    setOrderBy(property);
     setPage(0);
   };
 
@@ -122,34 +208,83 @@ export const PricedItemsTable: React.FC<PricedItemsTableProps> = ({ children, cl
                 Icon
               </TableCell>
 
-              <TableCell className="!font-inter !font-semibold !border-blue-gray-500 !text-blue-gray-200">
-                Item name
+              <TableCell
+                className="!font-inter !font-semibold !border-blue-gray-500 !text-blue-gray-200"
+                sortDirection={orderBy === OrderBy.Name ? order : false}
+              >
+                <TableSortLabel
+                  active={orderBy === OrderBy.Name}
+                  direction={orderBy === OrderBy.Name ? order : 'asc'}
+                  onClick={() => handleSortChange(OrderBy.Name)}
+                >
+                  Item name
+                </TableSortLabel>
               </TableCell>
 
-              <TableCell className="!font-inter !font-semibold !border-blue-gray-500 !text-blue-gray-200" align="right">
-                Quantity
+              <TableCell
+                className="!font-inter !font-semibold !border-blue-gray-500 !text-blue-gray-200"
+                align="right"
+                sortDirection={orderBy === OrderBy.Quantity ? order : false}
+              >
+                <TableSortLabel
+                  active={orderBy === OrderBy.Quantity}
+                  direction={orderBy === OrderBy.Quantity ? order : 'asc'}
+                  onClick={() => handleSortChange(OrderBy.Quantity)}
+                >
+                  Quantity
+                </TableSortLabel>
               </TableCell>
 
-              <TableCell className="!font-inter !font-semibold !border-blue-gray-500 !text-blue-gray-200" align="right">
-                Item level / tier
+              <TableCell
+                className="!font-inter !font-semibold !border-blue-gray-500 !text-blue-gray-200"
+                align="right"
+                sortDirection={orderBy === OrderBy.ItemLevel ? order : false}
+              >
+                <TableSortLabel
+                  active={orderBy === OrderBy.ItemLevel}
+                  direction={orderBy === OrderBy.ItemLevel ? order : 'asc'}
+                  onClick={() => handleSortChange(OrderBy.ItemLevel)}
+                >
+                  Item level / tier
+                </TableSortLabel>
               </TableCell>
 
               <TableCell className="!font-inter !font-semibold !border-blue-gray-500 !text-blue-gray-200" align="right">
                 Sockets
               </TableCell>
 
-              <TableCell className="!font-inter !font-semibold !border-blue-gray-500 !text-blue-gray-200" align="right">
-                Unit price (in chaos)
+              <TableCell
+                className="!font-inter !font-semibold !border-blue-gray-500 !text-blue-gray-200"
+                align="right"
+                sortDirection={orderBy === OrderBy.UnitPrice ? order : false}
+              >
+                <TableSortLabel
+                  active={orderBy === OrderBy.UnitPrice}
+                  direction={orderBy === OrderBy.UnitPrice ? order : 'asc'}
+                  onClick={() => handleSortChange(OrderBy.UnitPrice)}
+                >
+                  Unit price
+                </TableSortLabel>
               </TableCell>
 
-              <TableCell className="!font-inter !font-semibold !border-blue-gray-500 !text-blue-gray-200" align="right">
-                Total value (in chaos)
+              <TableCell
+                className="!font-inter !font-semibold !border-blue-gray-500 !text-blue-gray-200"
+                align="right"
+                sortDirection={orderBy === OrderBy.TotalValue ? order : false}
+              >
+                <TableSortLabel
+                  active={orderBy === OrderBy.TotalValue}
+                  direction={orderBy === OrderBy.TotalValue ? order : 'asc'}
+                  onClick={() => handleSortChange(OrderBy.TotalValue)}
+                >
+                  Total value
+                </TableSortLabel>
               </TableCell>
             </TableRow>
           </TableHead>
 
           <TableBody>
-            {filteredItems.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
+            {sortedItems.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
               <TableRow key={row.id}>
                 <TableCell className="!font-inter !font-normal !border-blue-gray-600">
                   <img className="h-6 w-auto" src={row.imageUrl} alt="" />
@@ -197,7 +332,7 @@ export const PricedItemsTable: React.FC<PricedItemsTableProps> = ({ children, cl
           caption: '!font-inter',
           input: '!font-inter',
         }}
-        count={filteredItems.length}
+        count={sortedItems.length}
         page={page}
         rowsPerPage={rowsPerPage}
         rowsPerPageOptions={[5, 10, 25, 50]}
