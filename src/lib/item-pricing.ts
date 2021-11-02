@@ -39,5 +39,15 @@ export function priceItem(item: Item, rates: RatesContextType): PricedItem {
     }
   }
 
+  // Price a card item.
+  if (rates.divinationCardRates && item.frameType === 6) {
+    const cardRate = rates.divinationCardRates.lines.find((line) => line.name === item.typeLine);
+
+    if (cardRate) {
+      itemValue.unit = cardRate.chaosValue;
+      itemValue.total = cardRate.chaosValue * (item.stackSize || 1);
+    }
+  }
+
   return itemValue;
 }
