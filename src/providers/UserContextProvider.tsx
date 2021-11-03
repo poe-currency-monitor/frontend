@@ -13,6 +13,22 @@ export const UserContextProvider: React.FC = ({ children }) => {
   const [stashTabs, setStashTabs] = React.useState<StashTab[]>([]);
   const [stashTabsItems, setStashTabsItems] = React.useState<StashTabsItems>({});
 
+  // On mounted, load POESESSID from local-storage.
+  React.useEffect(() => {
+    const storedPoesessid = localStorage.getItem('POESESSID');
+
+    if (storedPoesessid) {
+      setPoesessid(storedPoesessid);
+    }
+  }, []);
+
+  // Save POESESSID to local-storage when it changes.
+  React.useEffect(() => {
+    if (poesessid) {
+      localStorage.setItem('poesessid', poesessid);
+    }
+  }, [poesessid]);
+
   // On mounted, load profiles from local-storage.
   React.useEffect(() => {
     const storedProfiles = JSON.parse(localStorage.getItem('profiles') || '[]') as Profile[];
