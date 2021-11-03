@@ -13,6 +13,20 @@ export const UserContextProvider: React.FC = ({ children }) => {
   const [stashTabs, setStashTabs] = React.useState<StashTab[]>([]);
   const [stashTabsItems, setStashTabsItems] = React.useState<StashTabsItems>({});
 
+  // On mounted, load profiles from local-storage.
+  React.useEffect(() => {
+    const storedProfiles = JSON.parse(localStorage.getItem('profiles') || '[]') as Profile[];
+
+    setProfiles(storedProfiles);
+  }, []);
+
+  // Store profiles in the local-storage when they change.
+  React.useEffect(() => {
+    if (profiles.length) {
+      localStorage.setItem('profiles', JSON.stringify(profiles));
+    }
+  }, [profiles]);
+
   return (
     <UserContext.Provider
       value={{
