@@ -22,6 +22,7 @@ export function useLoadStashTabs(
 ): { fetchStashTabs: UseQueryResult<StashTabsResponse, unknown> } {
   const fetchStashTabs = useQuery(['getStashTabs', { token, poesessid, league, accountName }], getStashTabs, {
     enabled: false,
+    retry: false,
   });
 
   return { fetchStashTabs };

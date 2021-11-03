@@ -27,6 +27,7 @@ export function useLoadStashItems(
     getStashTabsItems,
     {
       enabled: false,
+      retry: false,
     },
   );
 

@@ -44,6 +44,7 @@ export function useLoadRates(
 
   const fetchCurrenciesRates = useQuery(['fetchCurrenciesRates', { token, league }], getAllCurrenciesRates, {
     enabled: false,
+    retry: false,
 
     onSuccess: (data) => {
       const currencyCategory = data.categories.find((category) => category.type === 'Currency');
@@ -61,6 +62,7 @@ export function useLoadRates(
 
   const fetchItemsRates = useQuery(['fetchItemsRates', { token, league }], getAllItemsRates, {
     enabled: false,
+    retry: false,
 
     onSuccess: (data) => {
       const divinationCardCategory = data.categories.find((category) => category.type === 'DivinationCard');
