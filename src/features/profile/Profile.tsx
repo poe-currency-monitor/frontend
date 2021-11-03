@@ -38,7 +38,7 @@ export const Profile: React.FC = () => {
 
   // Load currencies and items rates when a profile has been selected.
   React.useEffect(() => {
-    if (user.currentProfile && !fetchCurrenciesRates.data && !fetchItemsRates.data) {
+    if (user.currentProfile && !fetchCurrenciesRates.data && !fetchItemsRates.data && !fetchItemsRates.isError) {
       // Rates are automatically added to RatesContext inside the query definition.
       fetchCurrenciesRates.refetch().catch(() => null);
       fetchItemsRates.refetch().catch(() => null);
@@ -48,7 +48,7 @@ export const Profile: React.FC = () => {
   // When profile is selected, this effect is called, so we can load stash-tabs,
   // items-rates and stash-tabs items.
   React.useEffect(() => {
-    if (user.currentProfile && !fetchStashTabs.data) {
+    if (user.currentProfile && !fetchStashTabs.data && !fetchStashTabs.isError) {
       fetchStashTabs
         .refetch()
         .then((response) => (response.data ? user.setStashTabs(response.data.tabs.tabs) : null))
@@ -59,7 +59,7 @@ export const Profile: React.FC = () => {
   // Once stash-tabs have been loaded, `tabsIndexes` should have been updated
   // so we can fetch stash-items.
   React.useEffect(() => {
-    if (user.currentProfile && tabsIndexes && !fetchStashItems.data) {
+    if (user.currentProfile && tabsIndexes && !fetchStashItems.data && !fetchStashItems.isError) {
       fetchStashItems
         .refetch()
         .then((response) => {
