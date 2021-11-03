@@ -6,7 +6,14 @@ import { postLogin } from '../../API';
 import { UserContext } from '../../contexts/UserContext';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
+import { Layout } from '../../components/Layout';
 
+/**
+ * Auth view where user can login using its POESESSID.
+ *
+ * If user already have a POESESSID in local-storage, it will be automatically
+ * used to login. If it fails, delete the POESESSID from local-storage.
+ */
 export const Auth: React.FC = () => {
   const history = useHistory();
 
@@ -40,6 +47,8 @@ export const Auth: React.FC = () => {
   // On mounted, if there is already a `poesessid` it means it was set by the
   // `UserContext` when loading it from the local-storage. Try to silently
   // login with that `poesessid`. If it fails, remove it from local-storage.
+  //
+  // TODO: on auto-login fail, create a notification to ask for user to re-login.
   React.useEffect(() => {
     if (user.poesessid) {
       doLogin.mutate(user.poesessid, { onError: () => user.setPoesessid(null) });
@@ -47,8 +56,8 @@ export const Auth: React.FC = () => {
   }, []);
 
   return (
-    <section className="max-w-xl mx-auto">
-      <h1 className="mt-12 mb-4 leading-tight text-3xl text-center font-bold">PoE Baron Monitor</h1>
+    <Layout className="max-w-xl mx-auto pt-8">
+      <h1 className="mb-4 leading-tight text-3xl text-center font-bold">PoE Baron Monitor</h1>
 
       <p className="mb-8 text-lg text-center">A tool to visualize advanced statistics about your mapping activity.</p>
 
@@ -86,6 +95,6 @@ export const Auth: React.FC = () => {
         Because their OAuth API currently doesn&apos;t support stash-tabs and their content, so we need to use the old
         method which uses <b>the POESESSID</b>.
       </p>
-    </section>
+    </Layout>
   );
 };

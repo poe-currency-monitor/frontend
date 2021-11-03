@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import { Layout } from '../../components/Layout';
 import { DashboardItemsTable } from './DashboardItemsTable';
 
 /**
@@ -7,10 +8,10 @@ import { DashboardItemsTable } from './DashboardItemsTable';
  */
 export const Dashboard: React.FC = () => {
   return (
-    <section className="max-w-5xl pt-8 mx-auto">
+    <Layout>
       <h1 className="mb-6 leading-tight text-3xl font-bold">Dashboard</h1>
 
       <DashboardItemsTable />
-    </section>
+    </Layout>
   );
 };

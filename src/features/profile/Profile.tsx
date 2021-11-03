@@ -7,8 +7,12 @@ import { UserContext } from '../../contexts/UserContext';
 import { useLoadStashTabs } from '../../hooks/useLoadStashTabs';
 import { useLoadRates } from '../../hooks/useLoadRates';
 import { useLoadStashItems } from '../../hooks/useLoadStashItems';
+import { Layout } from '../../components/Layout';
 import { ProfileList } from './ProfileList';
 
+/**
+ * Profile view where user can manage its profiles: create, delete, select.
+ */
 export const Profile: React.FC = () => {
   const history = useHistory();
 
@@ -97,8 +101,8 @@ export const Profile: React.FC = () => {
   };
 
   return (
-    <section>
-      <h1 className="mt-12 mb-4 leading-tight text-3xl text-center font-bold">Welcome, {user.accountName}</h1>
+    <Layout className="max-w-5xl mx-auto pt-8">
+      <h1 className="mb-4 leading-tight text-3xl text-center font-bold">Welcome, {user.accountName}</h1>
 
       <h2 className="mb-4 leading-tight text-2xl text-center font-bold">Profile selection</h2>
 
@@ -109,6 +113,6 @@ export const Profile: React.FC = () => {
         onDeleteProfile={handleDeleteProfile}
         onSelectProfile={handleSelectProfile}
       />
-    </section>
+    </Layout>
   );
 };
