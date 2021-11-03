@@ -15,7 +15,7 @@ export const UserContextProvider: React.FC = ({ children }) => {
 
   // On mounted, load POESESSID from local-storage.
   React.useEffect(() => {
-    const storedPoesessid = localStorage.getItem('POESESSID');
+    const storedPoesessid = localStorage.getItem('poesessid');
 
     if (storedPoesessid) {
       setPoesessid(storedPoesessid);
