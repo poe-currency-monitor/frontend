@@ -21,7 +21,7 @@ export const DashboardItemsTable: React.FC = () => {
   }, [user.currentProfile, user.stashTabs]);
 
   return (
-    <PricedItemsTable className="p-6 rounded-md bg-zinc-700" tabs={tabs} items={user.stashTabsItems}>
+    <PricedItemsTable tabs={tabs} items={user.stashTabsItems}>
       <h1 className="mb-4 leading-tight text-2xl font-bold">Stash-tabs overview</h1>
     </PricedItemsTable>
   );

@@ -200,19 +200,20 @@ export const PricedItemsTable: React.FC<PricedItemsTableProps> = ({ children, cl
         />
       </div>
 
-      <TableContainer className="rounded-md bg-blue-gray-700" classes={{ root: 'mb-4 bg-slate-100' }}>
+      <TableContainer className="mb-4 rounded-md !bg-gray-700">
         <Table size="medium">
           <TableHead>
-            <TableRow>
-              <TableCell className="!font-inter !font-semibold !border-blue-gray-500 !text-blue-gray-200" width="64px">
+            <TableRow className=" !bg-gray-700">
+              <TableCell className="!font-inter !font-semibold !border-gray-600 !text-gray-200" width="64px">
                 Icon
               </TableCell>
 
               <TableCell
-                className="!font-inter !font-semibold !border-blue-gray-500 !text-blue-gray-200"
+                className="!font-inter !font-semibold !border-gray-600"
                 sortDirection={orderBy === OrderBy.Name ? order : false}
               >
                 <TableSortLabel
+                  className="!text-gray-200"
                   active={orderBy === OrderBy.Name}
                   direction={orderBy === OrderBy.Name ? order : 'asc'}
                   onClick={() => handleSortChange(OrderBy.Name)}
@@ -222,11 +223,12 @@ export const PricedItemsTable: React.FC<PricedItemsTableProps> = ({ children, cl
               </TableCell>
 
               <TableCell
-                className="!font-inter !font-semibold !border-blue-gray-500 !text-blue-gray-200"
+                className="!font-inter !font-semibold !border-gray-600"
                 align="right"
                 sortDirection={orderBy === OrderBy.Quantity ? order : false}
               >
                 <TableSortLabel
+                  className="!text-gray-200"
                   active={orderBy === OrderBy.Quantity}
                   direction={orderBy === OrderBy.Quantity ? order : 'asc'}
                   onClick={() => handleSortChange(OrderBy.Quantity)}
@@ -236,11 +238,12 @@ export const PricedItemsTable: React.FC<PricedItemsTableProps> = ({ children, cl
               </TableCell>
 
               <TableCell
-                className="!font-inter !font-semibold !border-blue-gray-500 !text-blue-gray-200"
+                className="!font-inter !font-semibold !border-gray-600"
                 align="right"
                 sortDirection={orderBy === OrderBy.ItemLevel ? order : false}
               >
                 <TableSortLabel
+                  className="!text-gray-200"
                   active={orderBy === OrderBy.ItemLevel}
                   direction={orderBy === OrderBy.ItemLevel ? order : 'asc'}
                   onClick={() => handleSortChange(OrderBy.ItemLevel)}
@@ -249,16 +252,17 @@ export const PricedItemsTable: React.FC<PricedItemsTableProps> = ({ children, cl
                 </TableSortLabel>
               </TableCell>
 
-              <TableCell className="!font-inter !font-semibold !border-blue-gray-500 !text-blue-gray-200" align="right">
+              <TableCell className="!font-inter !font-semibold !border-gray-600 !text-gray-200" align="right">
                 Sockets
               </TableCell>
 
               <TableCell
-                className="!font-inter !font-semibold !border-blue-gray-500 !text-blue-gray-200"
+                className="!font-inter !font-semibold !border-gray-600"
                 align="right"
                 sortDirection={orderBy === OrderBy.UnitPrice ? order : false}
               >
                 <TableSortLabel
+                  className="!text-gray-200"
                   active={orderBy === OrderBy.UnitPrice}
                   direction={orderBy === OrderBy.UnitPrice ? order : 'asc'}
                   onClick={() => handleSortChange(OrderBy.UnitPrice)}
@@ -268,11 +272,12 @@ export const PricedItemsTable: React.FC<PricedItemsTableProps> = ({ children, cl
               </TableCell>
 
               <TableCell
-                className="!font-inter !font-semibold !border-blue-gray-500 !text-blue-gray-200"
+                className="!font-inter !font-semibold !border-gray-600"
                 align="right"
                 sortDirection={orderBy === OrderBy.TotalValue ? order : false}
               >
                 <TableSortLabel
+                  className="!text-gray-200"
                   active={orderBy === OrderBy.TotalValue}
                   direction={orderBy === OrderBy.TotalValue ? order : 'asc'}
                   onClick={() => handleSortChange(OrderBy.TotalValue)}
@@ -286,37 +291,37 @@ export const PricedItemsTable: React.FC<PricedItemsTableProps> = ({ children, cl
           <TableBody>
             {sortedItems.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
               <TableRow key={row.id}>
-                <TableCell className="!font-inter !font-normal !border-blue-gray-600">
+                <TableCell className="!font-inter !font-normal !border-gray-600">
                   <img className="h-6 w-auto" src={row.imageUrl} alt="" />
                 </TableCell>
 
-                <TableCell className="!font-inter !border-blue-gray-500 !text-blue-gray-200">
+                <TableCell className="!font-inter !border-gray-600 !text-gray-200">
                   {row.typeLine || row.baseType}
                 </TableCell>
 
-                <TableCell className="!font-inter !border-blue-gray-500 !text-blue-gray-200" align="right">
+                <TableCell className="!font-inter !font-medium !border-gray-600 !text-gray-200" align="right">
                   {row.stackSize || 1}
                 </TableCell>
 
                 <TableCell
-                  className={`!font-inter !border-blue-gray-500 ${row.ilvl ? '!text-blue-gray-200' : '!text-gray-500'}`}
+                  className={`!font-inter !border-gray-600 ${row.ilvl ? '!text-gray-200' : '!text-gray-400'}`}
                   align="right"
                 >
                   {row.ilvl || 'N/A'}
                 </TableCell>
 
                 <TableCell
-                  className={`!font-inter !border-blue-gray-500 ${row.ilvl ? '!text-blue-gray-200' : '!text-gray-500'}`}
+                  className={`!font-inter !border-gray-600 ${row.ilvl ? '!text-gray-200' : '!text-gray-400'}`}
                   align="right"
                 >
                   {row.sockets ? row.sockets.length : 'N/A'}
                 </TableCell>
 
-                <TableCell className="!font-inter !font-medium !border-blue-gray-500 !text-orange-800" align="right">
+                <TableCell className="!font-inter !font-medium !border-gray-600 !text-orange-400" align="right">
                   {(Math.round(row.price.unit * 100) / 100).toFixed(2)}
                 </TableCell>
 
-                <TableCell className="!font-inter !font-medium !border-blue-gray-500 !text-orange-800" align="right">
+                <TableCell className="!font-inter !font-medium !border-gray-600 !text-orange-400" align="right">
                   {(Math.round(row.price.total * 100) / 100).toFixed(2)}
                 </TableCell>
               </TableRow>
@@ -328,7 +333,7 @@ export const PricedItemsTable: React.FC<PricedItemsTableProps> = ({ children, cl
       <TablePagination
         component="div"
         classes={{
-          root: 'rounded-md bg-slate-100',
+          root: 'rounded-md !bg-gray-700 !text-gray-200',
           caption: '!font-inter',
           input: '!font-inter',
         }}

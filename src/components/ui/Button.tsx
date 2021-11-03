@@ -2,8 +2,8 @@ import React from 'react';
 import clsx from 'clsx';
 
 const VARIANTS = {
-  primary: 'bg-blue-500 text-slate-100 hover:bg-blue-600',
-  secondary: 'bg-zinc-600 text-slate-100 hover:bg-zinc-700',
+  primary: 'bg-indigo-500 text-gray-200 hover:bg-indigo-600',
+  secondary: 'bg-gray-600 text-gray-200 hover:bg-gray-700',
   tertiary: 'text-red-600',
 };
 

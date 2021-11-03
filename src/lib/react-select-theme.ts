@@ -15,7 +15,8 @@ export const singleSelectStyle: StylesConfig<OptionType, false> = {
     ...provided,
     border: 'none',
     borderRadius: '0.375rem',
-    boxShadow: state.isFocused ? '0 0 0 3px #3c82f6, 0 0 #0000' : '',
+    backgroundColor: '#374151',
+    boxShadow: state.isFocused ? '0 0 0 3px #6366F1, 0 0 #0000' : '',
     transition: 'box-shadow 0.1s ease-in-out',
   }),
 
@@ -25,7 +26,7 @@ export const singleSelectStyle: StylesConfig<OptionType, false> = {
     fontFamily: 'Inter',
     fontWeight: 500,
     lineHeight: '1.75rem',
-    color: '#a1a1aa',
+    color: '#94A3B8',
   }),
 
   valueContainer: (provided) => ({
@@ -44,7 +45,7 @@ export const singleSelectStyle: StylesConfig<OptionType, false> = {
     fontWeight: 500,
     fontSize: '1.125rem',
     lineHeight: '1.75rem',
-    color: '#1a1a1d',
+    color: '#E5E7EB',
   }),
 
   singleValue: (provided) => ({
@@ -53,7 +54,7 @@ export const singleSelectStyle: StylesConfig<OptionType, false> = {
     fontWeight: 500,
     fontSize: '1.125rem',
     lineHeight: '1.75rem',
-    color: '#1a1a1d',
+    color: '#E5E7EB',
   }),
 
   option: (provided, state) => ({
@@ -62,7 +63,13 @@ export const singleSelectStyle: StylesConfig<OptionType, false> = {
     fontWeight: 400,
     fontSize: '1rem',
     lineHeight: '1.25rem',
-    color: state.isSelected ? '#f1f5f9' : '#1a1a1d',
+    backgroundColor: state.isFocused ? '#4B5563' : 'transparent',
+    color: state.isSelected ? '#E5E7EB' : '#E5E7EB',
+  }),
+
+  menu: (provided) => ({
+    ...provided,
+    backgroundColor: '#374151',
   }),
 };
 
@@ -76,7 +83,8 @@ export const multiSelectStyle: StylesConfig<OptionType, true> = {
     ...provided,
     border: 'none',
     borderRadius: '0.375rem',
-    boxShadow: state.isFocused ? '0 0 0 3px #3c82f6, 0 0 #0000' : '',
+    backgroundColor: '#374151',
+    boxShadow: state.isFocused ? '0 0 0 3px #6366F1, 0 0 #0000' : '',
     transition: 'box-shadow 0.1s ease-in-out',
   }),
 
@@ -86,7 +94,7 @@ export const multiSelectStyle: StylesConfig<OptionType, true> = {
     fontFamily: 'Inter',
     fontWeight: 500,
     lineHeight: '1.75rem',
-    color: '#a1a1aa',
+    color: '#9CA3AF',
   }),
 
   valueContainer: (provided) => ({
@@ -105,7 +113,7 @@ export const multiSelectStyle: StylesConfig<OptionType, true> = {
     fontWeight: 500,
     fontSize: '1.125rem',
     lineHeight: '1.75rem',
-    color: '#1a1a1d',
+    color: '#E5E7EB',
   }),
 
   singleValue: (provided) => ({
@@ -114,7 +122,7 @@ export const multiSelectStyle: StylesConfig<OptionType, true> = {
     fontWeight: 500,
     fontSize: '1.125rem',
     lineHeight: '1.75rem',
-    color: '#1a1a1d',
+    color: '#E5E7EB',
   }),
 
   option: (provided, state) => ({
@@ -123,6 +131,22 @@ export const multiSelectStyle: StylesConfig<OptionType, true> = {
     fontWeight: 400,
     fontSize: '1rem',
     lineHeight: '1.25rem',
-    color: state.isSelected ? '#f1f5f9' : '#1a1a1d',
+    backgroundColor: state.isFocused ? '#4B5563' : 'transparent',
+    color: '#E5E7EB',
+  }),
+
+  menu: (provided) => ({
+    ...provided,
+    backgroundColor: '#374151',
+  }),
+
+  multiValue: (provided) => ({
+    ...provided,
+    backgroundColor: '#1F2937',
+  }),
+
+  multiValueLabel: (provided) => ({
+    ...provided,
+    color: '#E5E7EB',
   }),
 };

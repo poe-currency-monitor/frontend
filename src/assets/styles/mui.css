@@ -1,0 +1,5 @@
+/* Custom style for the arrow ordering icon on the MUI table */
+.MuiSvgIcon-root.MuiTableSortLabel-icon.MuiTableSortLabel-iconDirectionAsc,
+.MuiSvgIcon-root.MuiTableSortLabel-icon.MuiTableSortLabel-iconDirectionDesc {
+  @apply !text-gray-400;
+}

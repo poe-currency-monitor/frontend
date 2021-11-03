@@ -16,7 +16,7 @@ export const Input: React.FC<InputProps> = ({ children, htmlFor, type = 'text', 
     <input
       type={type}
       id={id || htmlFor}
-      className="transition px-4 py-2 rounded-md text-lg text-zinc-900 font-medium ring-blue-500 focus:outline-none focus:ring placeholder-zinc-400"
+      className="transition px-4 py-2 rounded-md text-lg text-gray-200 font-medium bg-gray-700 ring-indigo-500 focus:outline-none focus:ring placeholder-gray-400"
       {...props}
     />
   </label>

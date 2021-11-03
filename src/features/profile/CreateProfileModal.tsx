@@ -90,7 +90,7 @@ export const CreateProfileModal: React.FC<CreateProfileModalTypes> = ({ isOpen, 
   return (
     <Modal
       isOpen={isOpen}
-      className="relative max-w-3xl px-6 py-4 mx-auto rounded-md text-zinc-900 bg-slate-100"
+      className="relative max-w-3xl px-6 py-12 mx-auto rounded-md text-gray-900 bg-gray-200"
       {...props}
     >
       <button

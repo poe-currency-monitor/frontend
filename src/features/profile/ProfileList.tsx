@@ -20,7 +20,7 @@ export const ProfileList: React.FC<ProfileListProps> = ({ profiles, onDeleteProf
         <li className="h-full w-full">
           <button
             type="button"
-            className="transition flex flex-col items-center justify-center min-h-[192px] h-full w-full px-2 py-4 border-2 border-dashed border-zinc-500 rounded-md cursor-pointer hover:border-zinc-400 focus:outline-none"
+            className="transition flex flex-col items-center justify-center min-h-[192px] h-full w-full px-2 py-4 border-2 border-dashed border-gray-500 rounded-md cursor-pointer hover:border-gray-400 focus:outline-none"
             onClick={() => setIsModalOpen(true)}
             onKeyPress={(event) => (event.key === 'Enter' ? setIsModalOpen(true) : null)}
           >
@@ -38,11 +38,11 @@ export const ProfileList: React.FC<ProfileListProps> = ({ profiles, onDeleteProf
               onKeyPress={(event) => (event.key === 'Enter' ? onSelectProfile(profile) : null)}
               onClick={() => onSelectProfile(profile)}
             >
-              <h3 className="mb-4 text-center text-zinc-900 font-medium text-xl">{profile.name}</h3>
+              <h3 className="mb-4 text-center text-gray-900 font-medium text-xl">{profile.name}</h3>
 
-              <p className="mb-1 text-center text-zinc-700 font-medium text-base">{profile.league} league</p>
+              <p className="mb-1 text-center text-gray-700 font-medium text-base">{profile.league} league</p>
 
-              <p className="text-center text-zinc-700 font-medium text-sm">{profile.tabs.length} stash-tabs</p>
+              <p className="text-center text-gray-500 font-medium text-sm">{profile.tabs.length} stash-tabs</p>
             </button>
 
             <button
