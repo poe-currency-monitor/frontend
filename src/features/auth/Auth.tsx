@@ -32,6 +32,15 @@ export const Auth: React.FC = () => {
     setPoesessid(event.target.value);
   };
 
+  // On mounted, if there is already a `poesessid` it means it was set by the
+  // `UserContext` when loading it from the local-storage. Try to silently
+  // login with that `poesessid`. If it fails, remove it from local-storage.
+  React.useEffect(() => {
+    if (user.poesessid) {
+      doLogin.mutate(user.poesessid, { onError: () => user.setPoesessid(null) });
+    }
+  }, []);
+
   return (
     <section className="max-w-xl mx-auto">
       <h1 className="mt-12 mb-4 leading-tight text-3xl text-center font-bold">PoE Baron Monitor</h1>
