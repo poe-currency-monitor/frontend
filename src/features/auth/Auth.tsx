@@ -15,7 +15,12 @@ export const Auth: React.FC = () => {
 
   const doLogin = useMutation(['doLogin'], postLogin, {
     onSuccess: (data) => {
-      user.setPoesessid(poesessid);
+      // `poesessid` variable is not defined if it's called from auto-login,
+      // because this variable is used by the input field.
+      if (poesessid) {
+        user.setPoesessid(poesessid);
+      }
+
       user.setToken(data.token);
       user.setAccountName(data.accountName);
 
