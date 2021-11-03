@@ -98,7 +98,9 @@ export const Profile: React.FC = () => {
 
   return (
     <section>
-      <h2 className="mt-12 mb-4 leading-tight text-2xl text-center font-bold">Profile selection</h2>
+      <h1 className="mt-12 mb-4 leading-tight text-3xl text-center font-bold">Welcome, {user.accountName}</h1>
+
+      <h2 className="mb-4 leading-tight text-2xl text-center font-bold">Profile selection</h2>
 
       <p className="mb-8 text-lg text-center">Select or create the profile you want to use for this session.</p>
 
