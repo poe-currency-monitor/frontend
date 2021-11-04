@@ -103,20 +103,31 @@ export const CreateProfileModal: React.FC<CreateProfileModalTypes> = ({ isOpen, 
       <h3 className="mb-8 font-medium text-2xl text-center">Create a new profile</h3>
 
       <form className="max-w-sm mx-auto" onSubmit={handleSubmit}>
-        <Input htmlFor="profile-name" type="text" placeholder="Profile name" onChange={handleOnChange}>
+        <Input
+          htmlFor="profile-name"
+          type="text"
+          placeholder="Profile name"
+          variant="secondary"
+          onChange={handleOnChange}
+        >
           Enter your profile name
         </Input>
 
         <fieldset className="mb-4">
           <p className="mb-1 font-medium">Choose your pricing league</p>
 
-          <Select options={leaguesOptions} onChange={handleLeagueChange} />
+          <Select options={leaguesOptions} variant="secondary" onChange={handleLeagueChange} />
         </fieldset>
 
         <fieldset className="mb-8">
           <p className="mb-1 font-medium">Select your stash-tabs</p>
 
-          <MultiSelect options={tabsOptions} isDisabled={!fetchTabs.isFetched} onChange={handleTabsChange} />
+          <MultiSelect
+            options={tabsOptions}
+            variant="secondary"
+            isDisabled={!fetchTabs.isFetched}
+            onChange={handleTabsChange}
+          />
         </fieldset>
 
         <Button type="submit" className="w-full">

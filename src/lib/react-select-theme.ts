@@ -5,72 +5,193 @@ type OptionType = {
   label: string;
 };
 
+export type Variants = 'primary' | 'secondary';
+
+export type VariantStyle = {
+  control: {
+    backgroundColor: string;
+    boxShadow: string;
+  };
+
+  placeholder: {
+    color: string;
+  };
+
+  input: {
+    color: string;
+  };
+
+  singleValue: {
+    color: string;
+  };
+
+  option: {
+    backgroundColor: string;
+    backgroundColorFocused: string;
+    color: string;
+  };
+
+  menu: {
+    backgroundColor: string;
+  };
+
+  multiValue: {
+    backgroundColor: string;
+  };
+
+  multiValueLabel: {
+    backgroundColor: string;
+  };
+};
+
+const VARIANTS: { [key in Variants]: VariantStyle } = {
+  // Dark-theme style
+  primary: {
+    control: {
+      backgroundColor: '#374151',
+      boxShadow: '#6366F1',
+    },
+
+    placeholder: {
+      color: '#9CA3AF',
+    },
+
+    input: {
+      color: '#E5E7EB',
+    },
+
+    singleValue: {
+      color: '#E5E7EB',
+    },
+
+    option: {
+      backgroundColor: 'transparent',
+      backgroundColorFocused: '#4B5563',
+      color: '#E5E7EB',
+    },
+
+    menu: {
+      backgroundColor: '#374151',
+    },
+
+    multiValue: {
+      backgroundColor: '#1F2937',
+    },
+
+    multiValueLabel: {
+      backgroundColor: '#E5E7EB',
+    },
+  },
+
+  // Light-theme style
+  secondary: {
+    control: {
+      backgroundColor: '#F3F4F6',
+      boxShadow: '#6366F1',
+    },
+
+    placeholder: {
+      color: '#9CA3AF',
+    },
+
+    input: {
+      color: '#111827',
+    },
+
+    singleValue: {
+      color: '#111827',
+    },
+
+    option: {
+      backgroundColor: 'transparent',
+      backgroundColorFocused: '#E5E7EB',
+      color: '#111827',
+    },
+
+    menu: {
+      backgroundColor: '#F3F4F6',
+    },
+
+    multiValue: {
+      backgroundColor: '#E5E7EB',
+    },
+
+    multiValueLabel: {
+      backgroundColor: '#111827',
+    },
+  },
+};
+
 /**
  * Default style for the `react-select` component. Don't use this object for
  * `<Select isMulti={true} />`. Make sure to use colors from TailwindCSS color
  * palette.
  */
-export const singleSelectStyle: StylesConfig<OptionType, false> = {
-  control: (provided, state) => ({
-    ...provided,
-    border: 'none',
-    borderRadius: '0.375rem',
-    backgroundColor: '#374151',
-    boxShadow: state.isFocused ? '0 0 0 3px #6366F1, 0 0 #0000' : '',
-    transition: 'box-shadow 0.1s ease-in-out',
-  }),
+export const singleSelectStyle = (variant: Variants = 'primary'): StylesConfig<OptionType, false> => {
+  const style = VARIANTS[variant];
 
-  placeholder: (provided) => ({
-    ...provided,
-    fontSize: '1.125rem',
-    fontFamily: 'Inter',
-    fontWeight: 500,
-    lineHeight: '1.75rem',
-    color: '#94A3B8',
-  }),
+  return {
+    control: (provided, state) => ({
+      ...provided,
+      border: 'none',
+      borderRadius: '0.375rem',
+      backgroundColor: style.control.backgroundColor,
+      boxShadow: state.isFocused ? `0 0 0 3px ${style.control.boxShadow}, 0 0 #0000` : '',
+      transition: 'box-shadow 0.1s ease-in-out',
+    }),
 
-  valueContainer: (provided) => ({
-    ...provided,
-    padding: '0.25rem 1rem',
-  }),
+    placeholder: (provided) => ({
+      ...provided,
+      fontSize: '1.125rem',
+      fontFamily: 'Inter',
+      fontWeight: 500,
+      lineHeight: '1.75rem',
+      color: style.placeholder.color,
+    }),
 
-  indicatorSeparator: (provided) => ({
-    ...provided,
-    display: 'none',
-  }),
+    valueContainer: (provided) => ({
+      ...provided,
+      padding: '0.25rem 1rem',
+    }),
 
-  input: (provided) => ({
-    ...provided,
-    fontFamily: 'Inter',
-    fontWeight: 500,
-    fontSize: '1.125rem',
-    lineHeight: '1.75rem',
-    color: '#E5E7EB',
-  }),
+    indicatorSeparator: (provided) => ({
+      ...provided,
+      display: 'none',
+    }),
 
-  singleValue: (provided) => ({
-    ...provided,
-    fontFamily: 'Inter',
-    fontWeight: 500,
-    fontSize: '1.125rem',
-    lineHeight: '1.75rem',
-    color: '#E5E7EB',
-  }),
+    input: (provided) => ({
+      ...provided,
+      fontFamily: 'Inter',
+      fontWeight: 500,
+      fontSize: '1.125rem',
+      lineHeight: '1.75rem',
+      color: style.input.color,
+    }),
 
-  option: (provided, state) => ({
-    ...provided,
-    fontFamily: 'Inter',
-    fontWeight: 400,
-    fontSize: '1rem',
-    lineHeight: '1.25rem',
-    backgroundColor: state.isFocused ? '#4B5563' : 'transparent',
-    color: state.isSelected ? '#E5E7EB' : '#E5E7EB',
-  }),
+    singleValue: (provided) => ({
+      ...provided,
+      fontFamily: 'Inter',
+      fontWeight: 500,
+      fontSize: '1.125rem',
+      lineHeight: '1.75rem',
+      color: style.singleValue.color,
+    }),
 
-  menu: (provided) => ({
-    ...provided,
-    backgroundColor: '#374151',
-  }),
+    option: (provided, state) => ({
+      ...provided,
+      fontFamily: 'Inter',
+      fontWeight: 400,
+      fontSize: '1rem',
+      lineHeight: '1.25rem',
+      backgroundColor: state.isFocused ? style.option.backgroundColorFocused : style.option.backgroundColor,
+      color: style.option.color,
+    }),
+
+    menu: (provided) => ({
+      ...provided,
+      backgroundColor: style.menu.backgroundColor,
+    }),
+  };
 };
 
 /**
@@ -78,75 +199,79 @@ export const singleSelectStyle: StylesConfig<OptionType, false> = {
  * `<Select isMulti={false} />`. Make sure to use colors from TailwindCSS color
  * palette.
  */
-export const multiSelectStyle: StylesConfig<OptionType, true> = {
-  control: (provided, state) => ({
-    ...provided,
-    border: 'none',
-    borderRadius: '0.375rem',
-    backgroundColor: '#374151',
-    boxShadow: state.isFocused ? '0 0 0 3px #6366F1, 0 0 #0000' : '',
-    transition: 'box-shadow 0.1s ease-in-out',
-  }),
+export const multiSelectStyle = (variant: Variants = 'primary'): StylesConfig<OptionType, true> => {
+  const style = VARIANTS[variant];
 
-  placeholder: (provided) => ({
-    ...provided,
-    fontSize: '1.125rem',
-    fontFamily: 'Inter',
-    fontWeight: 500,
-    lineHeight: '1.75rem',
-    color: '#9CA3AF',
-  }),
+  return {
+    control: (provided, state) => ({
+      ...provided,
+      border: 'none',
+      borderRadius: '0.375rem',
+      backgroundColor: style.control.backgroundColor,
+      boxShadow: state.isFocused ? `0 0 0 3px ${style.control.boxShadow}, 0 0 #0000` : '',
+      transition: 'box-shadow 0.1s ease-in-out',
+    }),
 
-  valueContainer: (provided) => ({
-    ...provided,
-    padding: '0.25rem 1rem',
-  }),
+    placeholder: (provided) => ({
+      ...provided,
+      fontSize: '1.125rem',
+      fontFamily: 'Inter',
+      fontWeight: 500,
+      lineHeight: '1.75rem',
+      color: style.placeholder.color,
+    }),
 
-  indicatorSeparator: (provided) => ({
-    ...provided,
-    display: 'none',
-  }),
+    valueContainer: (provided) => ({
+      ...provided,
+      padding: '0.25rem 1rem',
+    }),
 
-  input: (provided) => ({
-    ...provided,
-    fontFamily: 'Inter',
-    fontWeight: 500,
-    fontSize: '1.125rem',
-    lineHeight: '1.75rem',
-    color: '#E5E7EB',
-  }),
+    indicatorSeparator: (provided) => ({
+      ...provided,
+      display: 'none',
+    }),
 
-  singleValue: (provided) => ({
-    ...provided,
-    fontFamily: 'Inter',
-    fontWeight: 500,
-    fontSize: '1.125rem',
-    lineHeight: '1.75rem',
-    color: '#E5E7EB',
-  }),
+    input: (provided) => ({
+      ...provided,
+      fontFamily: 'Inter',
+      fontWeight: 500,
+      fontSize: '1.125rem',
+      lineHeight: '1.75rem',
+      color: style.input.color,
+    }),
 
-  option: (provided, state) => ({
-    ...provided,
-    fontFamily: 'Inter',
-    fontWeight: 400,
-    fontSize: '1rem',
-    lineHeight: '1.25rem',
-    backgroundColor: state.isFocused ? '#4B5563' : 'transparent',
-    color: '#E5E7EB',
-  }),
+    singleValue: (provided) => ({
+      ...provided,
+      fontFamily: 'Inter',
+      fontWeight: 500,
+      fontSize: '1.125rem',
+      lineHeight: '1.75rem',
+      color: style.singleValue.color,
+    }),
 
-  menu: (provided) => ({
-    ...provided,
-    backgroundColor: '#374151',
-  }),
+    option: (provided, state) => ({
+      ...provided,
+      fontFamily: 'Inter',
+      fontWeight: 400,
+      fontSize: '1rem',
+      lineHeight: '1.25rem',
+      backgroundColor: state.isFocused ? style.option.backgroundColorFocused : style.option.backgroundColor,
+      color: style.option.color,
+    }),
 
-  multiValue: (provided) => ({
-    ...provided,
-    backgroundColor: '#1F2937',
-  }),
+    menu: (provided) => ({
+      ...provided,
+      backgroundColor: style.menu.backgroundColor,
+    }),
 
-  multiValueLabel: (provided) => ({
-    ...provided,
-    color: '#E5E7EB',
-  }),
+    multiValue: (provided) => ({
+      ...provided,
+      backgroundColor: style.multiValue.backgroundColor,
+    }),
+
+    multiValueLabel: (provided) => ({
+      ...provided,
+      color: style.multiValueLabel.backgroundColor,
+    }),
+  };
 };

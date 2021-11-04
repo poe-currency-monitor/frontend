@@ -1,14 +1,16 @@
 import React from 'react';
 import ReactSelect, { Props as ReactSelectProps } from 'react-select';
 
-import { singleSelectStyle } from '../../lib/react-select-theme';
+import { Variants, singleSelectStyle } from '../../lib/react-select-theme';
 
 export type SelectOption = {
   label: string;
   value: string;
 };
 
-export type SelectProps = ReactSelectProps<SelectOption, false>;
+export type SelectProps = ReactSelectProps<SelectOption, false> & {
+  variant?: Variants;
+};
 
 /**
  * Wrapper around the `react-select` component with a default style.
@@ -17,6 +19,6 @@ export type SelectProps = ReactSelectProps<SelectOption, false>;
  *
  * @param props React-Select props.
  */
-export const Select: React.FC<SelectProps> = (props) => {
-  return <ReactSelect {...props} styles={singleSelectStyle} isMulti={false} />;
+export const Select: React.FC<SelectProps> = ({ variant, ...props }) => {
+  return <ReactSelect {...props} styles={singleSelectStyle(variant)} isMulti={false} />;
 };

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactSelect, { Props as ReactSelectProps, MultiValue } from 'react-select';
 
-import { multiSelectStyle } from '../../lib/react-select-theme';
+import { Variants, multiSelectStyle } from '../../lib/react-select-theme';
 
 export type MultiSelectOption = {
   label: string;
@@ -10,7 +10,9 @@ export type MultiSelectOption = {
 
 export type MultiSelectOptions = MultiValue<MultiSelectOption>;
 
-export type MultiSelectProps = ReactSelectProps<MultiSelectOption, true>;
+export type MultiSelectProps = ReactSelectProps<MultiSelectOption, true> & {
+  variant?: Variants;
+};
 
 /**
  * Wrapper around the `react-select` component with a default style.
@@ -18,6 +20,6 @@ export type MultiSelectProps = ReactSelectProps<MultiSelectOption, true>;
  *
  * @param props React-Select props.
  */
-export const MultiSelect: React.FC<MultiSelectProps> = (props) => {
-  return <ReactSelect {...props} styles={multiSelectStyle} isMulti />;
+export const MultiSelect: React.FC<MultiSelectProps> = ({ variant = 'primary', ...props }) => {
+  return <ReactSelect {...props} styles={multiSelectStyle(variant)} isMulti />;
 };
