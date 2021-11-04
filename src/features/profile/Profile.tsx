@@ -40,6 +40,15 @@ export const Profile: React.FC = () => {
     tabsIndexes,
   );
 
+  const isLoading = React.useMemo(
+    () =>
+      fetchCurrenciesRates.isLoading ||
+      fetchItemsRates.isLoading ||
+      fetchStashTabs.isLoading ||
+      fetchStashItems.isLoading,
+    [fetchCurrenciesRates.isLoading, fetchItemsRates.isLoading, fetchStashItems.isLoading, fetchStashItems.isLoading],
+  );
+
   // Load currencies and items rates when a profile has been selected.
   React.useEffect(() => {
     if (user.currentProfile && !fetchCurrenciesRates.data && !fetchItemsRates.data && !fetchItemsRates.isError) {
@@ -110,6 +119,7 @@ export const Profile: React.FC = () => {
 
       <ProfileList
         profiles={user.profiles}
+        isLoadingProfile={isLoading}
         onDeleteProfile={handleDeleteProfile}
         onSelectProfile={handleSelectProfile}
       />
