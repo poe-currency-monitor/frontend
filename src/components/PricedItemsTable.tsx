@@ -204,12 +204,15 @@ export const PricedItemsTable: React.FC<PricedItemsTableProps> = ({ children, cl
         <Table size="medium">
           <TableHead>
             <TableRow className=" !bg-gray-700">
-              <TableCell className="!font-inter !font-semibold !border-gray-600 !text-gray-200" width="64px">
+              <TableCell
+                className="!px-4 !py-3 !leading-none !font-inter !font-semibold !border-gray-600 !text-gray-200"
+                width="64px"
+              >
                 Icon
               </TableCell>
 
               <TableCell
-                className="!font-inter !font-semibold !border-gray-600"
+                className="!px-4 !py-3 !leading-none !font-inter !font-semibold !border-gray-600"
                 sortDirection={orderBy === OrderBy.Name ? order : false}
               >
                 <TableSortLabel
@@ -223,7 +226,7 @@ export const PricedItemsTable: React.FC<PricedItemsTableProps> = ({ children, cl
               </TableCell>
 
               <TableCell
-                className="!font-inter !font-semibold !border-gray-600"
+                className="!px-4 !py-3 !leading-none !font-inter !font-semibold !border-gray-600"
                 align="right"
                 sortDirection={orderBy === OrderBy.Quantity ? order : false}
               >
@@ -238,7 +241,7 @@ export const PricedItemsTable: React.FC<PricedItemsTableProps> = ({ children, cl
               </TableCell>
 
               <TableCell
-                className="!font-inter !font-semibold !border-gray-600"
+                className="!px-4 !py-3 !leading-none !font-inter !font-semibold !border-gray-600"
                 align="right"
                 sortDirection={orderBy === OrderBy.ItemLevel ? order : false}
               >
@@ -252,12 +255,15 @@ export const PricedItemsTable: React.FC<PricedItemsTableProps> = ({ children, cl
                 </TableSortLabel>
               </TableCell>
 
-              <TableCell className="!font-inter !font-semibold !border-gray-600 !text-gray-200" align="right">
+              <TableCell
+                className="!px-4 !py-3 !leading-none !font-inter !font-semibold !border-gray-600 !text-gray-200"
+                align="right"
+              >
                 Sockets
               </TableCell>
 
               <TableCell
-                className="!font-inter !font-semibold !border-gray-600"
+                className="!px-4 !py-3 !leading-none !font-inter !font-semibold !border-gray-600"
                 align="right"
                 sortDirection={orderBy === OrderBy.UnitPrice ? order : false}
               >
@@ -272,7 +278,7 @@ export const PricedItemsTable: React.FC<PricedItemsTableProps> = ({ children, cl
               </TableCell>
 
               <TableCell
-                className="!font-inter !font-semibold !border-gray-600"
+                className="!px-4 !py-3 !leading-none !font-inter !font-semibold !border-gray-600"
                 align="right"
                 sortDirection={orderBy === OrderBy.TotalValue ? order : false}
               >
