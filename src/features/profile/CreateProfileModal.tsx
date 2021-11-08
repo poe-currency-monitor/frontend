@@ -51,6 +51,7 @@ export const CreateProfileModal: React.FC<CreateProfileModalTypes> = ({ isOpen, 
         {
           league,
           name,
+          snapshots: [],
           tabs: tabs.map((tab) => ({
             id: tab.id,
             name: tab.n,
