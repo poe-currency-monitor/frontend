@@ -13,6 +13,23 @@ export const UserContextProvider: React.FC = ({ children }) => {
   const [stashTabs, setStashTabs] = React.useState<StashTab[]>([]);
   const [stashTabsItems, setStashTabsItems] = React.useState<StashTabsItems>({});
 
+  // Snapshots are updated on the `currentProfile` variable, so we need to make
+  // sure they are also updated in the `profiles` variables and save it to the
+  // local-storage. When `profiles` changes, it will trigger a local-storage save.
+  React.useEffect(() => {
+    if (currentProfile && currentProfile.snapshots) {
+      const updatedProfiles = profiles.map((profile) => {
+        if (profile.name === currentProfile.name) {
+          return { ...profile, snapshots: currentProfile.snapshots };
+        }
+
+        return profile;
+      });
+
+      setProfiles(updatedProfiles);
+    }
+  }, [currentProfile, currentProfile?.snapshots]);
+
   // On mounted, load POESESSID from local-storage.
   React.useEffect(() => {
     const storedPoesessid = localStorage.getItem('poesessid');
