@@ -1,5 +1,5 @@
 import { ItemPrice } from '../interfaces/item-pricing.interfaces';
-import { Item } from '../interfaces/poe.interfaces';
+import { Item, StashTabsItems, PricedItem } from '../interfaces/poe.interfaces';
 import { RatesContextType } from '../contexts/RatesContext';
 
 /**
@@ -79,4 +79,26 @@ export function priceItem(item: Item, rates: RatesContextType): ItemPrice {
   }
 
   return itemValue;
+}
+
+/**
+ * Flatten the `UserContext.stashTabsItems` object into a flat array of priced
+ * items.
+ *
+ * @param stashTabsItems Stash-tabs items from `UserContext`.
+ * @param rates Items rates from `RatesContext`.
+ * @returns A flatten stash-tabs items that have been priced individually.
+ */
+export function priceStashTabsItems(stashTabsItems: StashTabsItems, rates: RatesContextType): PricedItem[] {
+  const pricedItems: PricedItem[] = [];
+
+  Object.entries(stashTabsItems).forEach(([, tabItems]) => {
+    tabItems.forEach((tabItem) => {
+      const price = priceItem(tabItem, rates);
+
+      pricedItems.push({ ...tabItem, price });
+    });
+  });
+
+  return pricedItems;
 }
