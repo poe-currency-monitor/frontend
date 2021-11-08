@@ -10,9 +10,10 @@ import {
   TableSortLabel,
 } from '@material-ui/core';
 
+import { ItemPrice } from '../interfaces/item-pricing.interfaces';
 import { Item, StashTab, StashTabsItems } from '../interfaces/poe.interfaces';
 import { RatesContext } from '../contexts/RatesContext';
-import { PricedItem, priceItem } from '../lib/item-pricing';
+import { priceItem } from '../lib/item-pricing';
 import { Input } from './ui/Input';
 import { MultiSelect, MultiSelectOption, MultiSelectOptions } from './ui/MultiSelect';
 
@@ -24,7 +25,7 @@ export type PricedItemsTableProps = {
 
 export type PricedItemsTableFormattedItem = Item & {
   tabId: string;
-  price: PricedItem;
+  price: ItemPrice;
   imageUrl: string;
 };
 

@@ -1,3 +1,5 @@
+import { ItemPrice } from './item-pricing.interfaces';
+
 type LeagueRule = {
   id: string;
   name: string;
@@ -92,3 +94,7 @@ export type Item = {
  * `StashTab`.
  */
 export type StashTabsItems = { [key: string]: Item[] };
+
+export type PricedItem = Item & {
+  price: ItemPrice;
+};

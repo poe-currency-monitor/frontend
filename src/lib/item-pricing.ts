@@ -1,10 +1,6 @@
+import { ItemPrice } from '../interfaces/item-pricing.interfaces';
 import { Item } from '../interfaces/poe.interfaces';
 import { RatesContextType } from '../contexts/RatesContext';
-
-export type PricedItem = {
-  unit: number;
-  total: number;
-};
 
 /**
  * Try to price a Path of Exile item.
@@ -13,7 +9,7 @@ export type PricedItem = {
  * @param rates Currency and items rates fetched from poe.ninja.
  * @returns A priced item object in chaos equivalent.
  */
-export function priceItem(item: Item, rates: RatesContextType): PricedItem {
+export function priceItem(item: Item, rates: RatesContextType): ItemPrice {
   const itemValue = {
     unit: 0,
     total: 0,
