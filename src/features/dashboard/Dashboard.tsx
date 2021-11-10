@@ -6,6 +6,7 @@ import { UserContext } from '../../contexts/UserContext';
 import { RatesContext } from '../../contexts/RatesContext';
 import { Layout } from '../../components/Layout';
 import { Button } from '../../components/ui/Button';
+import { Card } from '../../components/ui/Card';
 import { DashboardItemsTable } from './DashboardItemsTable';
 
 /**
@@ -41,6 +42,22 @@ export const Dashboard: React.FC = () => {
           <ClockIcon className="h-4 w-auto mr-2" />
           {user.currentProfile?.snapshots.length || 0} snapshots
         </Button>
+      </div>
+
+      <div className="mb-6 flex justify-between">
+        <Card title="Total value" badge="All tabs">
+          <div className="flex items-baseline text-white">
+            <p className="mr-3 text-5xl font-black tracking-tighter leading-tight">1,234</p>
+            <p className="text-lg font-medium">chaos</p>
+          </div>
+        </Card>
+
+        <Card title="Chaos per hour">
+          <div className="flex items-baseline text-white">
+            <p className="mr-3 text-5xl font-black tracking-tighter leading-tight">154</p>
+            <p className="text-lg font-medium">chaos/hour</p>
+          </div>
+        </Card>
       </div>
 
       <DashboardItemsTable />
