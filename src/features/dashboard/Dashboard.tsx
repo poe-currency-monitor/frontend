@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ClockIcon } from '@heroicons/react/solid';
+import { ClockIcon, PlusCircleIcon } from '@heroicons/react/solid';
 
 import { priceStashTabsItems } from '../../lib/item-pricing';
 import { UserContext } from '../../contexts/UserContext';
@@ -16,34 +16,52 @@ export const Dashboard: React.FC = () => {
   const user = React.useContext(UserContext);
   const rates = React.useContext(RatesContext);
 
+  const snapshotsAmount = React.useMemo(
+    () => user.currentProfile?.snapshots.length || 0,
+    [user.currentProfile?.snapshots],
+  );
+
   const pricedItems = React.useMemo(() => priceStashTabsItems(user.stashTabsItems, rates), [user.stashTabs]);
   const totalPrice = React.useMemo(() => pricedItems.reduce((acc, item) => acc + item.price.total, 0), [pricedItems]);
 
-  // On component mounted, create a snapshot of the user's stash.
-  React.useEffect(() => {
+  const createSnapshot = () => {
     if (user.currentProfile) {
-      const snapshots = user.currentProfile.snapshots;
       const date = new Date().toISOString();
 
-      user.currentProfile.snapshots = [
-        ...snapshots,
-        {
-          date,
-          stashTabs: user.stashTabs,
-          items: priceStashTabsItems(user.stashTabsItems, rates),
-        },
-      ];
+      user.setCurrentProfile({
+        ...user.currentProfile,
+        snapshots: [
+          ...user.currentProfile.snapshots,
+          {
+            date,
+            stashTabs: user.stashTabs,
+            items: priceStashTabsItems(user.stashTabsItems, rates),
+          },
+        ],
+      });
     }
-  }, []);
+  };
+
+  // On component mounted, create a snapshot of the user's stash.
+  React.useEffect(() => createSnapshot(), []);
+
+  const handleCreateSnapshot: React.MouseEventHandler = () => {
+    createSnapshot();
+  };
 
   return (
     <Layout>
       <h1 className="mb-6 leading-tight text-3xl font-bold">Dashboard</h1>
 
       <div className="flex flex-row-reverse mb-4">
+        <Button variant="primary" className="flex flex-row ml-2" type="button" onClick={handleCreateSnapshot}>
+          <PlusCircleIcon className="h-4 w-auto mr-2" />
+          Create a snapshot
+        </Button>
+
         <Button variant="secondary" className="flex flex-row" type="button">
           <ClockIcon className="h-4 w-auto mr-2" />
-          {user.currentProfile?.snapshots.length || 0} snapshots
+          {snapshotsAmount} snapshot{snapshotsAmount > 1 ? 's' : ''}
         </Button>
       </div>
 
