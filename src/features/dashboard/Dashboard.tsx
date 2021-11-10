@@ -16,6 +16,9 @@ export const Dashboard: React.FC = () => {
   const user = React.useContext(UserContext);
   const rates = React.useContext(RatesContext);
 
+  const pricedItems = React.useMemo(() => priceStashTabsItems(user.stashTabsItems, rates), [user.stashTabs]);
+  const totalPrice = React.useMemo(() => pricedItems.reduce((acc, item) => acc + item.price.total, 0), [pricedItems]);
+
   // On component mounted, create a snapshot of the user's stash.
   React.useEffect(() => {
     if (user.currentProfile) {
@@ -44,17 +47,20 @@ export const Dashboard: React.FC = () => {
         </Button>
       </div>
 
-      <div className="mb-6 flex justify-between">
+      <div className="mb-6 flex justify-evenly">
         <Card title="Total value" badge="All tabs">
           <div className="flex items-baseline text-white">
-            <p className="mr-3 text-5xl font-black tracking-tighter leading-tight">1,234</p>
+            <p className="mr-3 text-5xl font-black tracking-tighter leading-tight">
+              {(Math.round(totalPrice * 100) / 100).toFixed(2)}
+            </p>
+
             <p className="text-lg font-medium">chaos</p>
           </div>
         </Card>
 
-        <Card title="Chaos per hour">
+        <Card title="Income per hour">
           <div className="flex items-baseline text-white">
-            <p className="mr-3 text-5xl font-black tracking-tighter leading-tight">154</p>
+            <p className="mr-3 text-5xl font-black tracking-tighter leading-tight">0</p>
             <p className="text-lg font-medium">chaos/hour</p>
           </div>
         </Card>
