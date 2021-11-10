@@ -20,9 +20,5 @@ export const DashboardItemsTable: React.FC = () => {
     return [];
   }, [user.currentProfile, user.stashTabs]);
 
-  return (
-    <PricedItemsTable tabs={tabs} items={user.stashTabsItems}>
-      <h1 className="mb-4 leading-tight text-2xl font-bold">Stash-tabs overview</h1>
-    </PricedItemsTable>
-  );
+  return <PricedItemsTable tabs={tabs} items={user.stashTabsItems} />;
 };
