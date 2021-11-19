@@ -2,6 +2,8 @@ import path from 'path';
 import { BrowserWindow, app } from 'electron';
 import installExtension, { REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
 
+import { registerIpcEvents } from './ipc-events';
+
 const env = process.env.NODE_ENV;
 
 let mainWindow: BrowserWindow | null = null;
@@ -49,6 +51,8 @@ app
       // eslint-disable-next-line promise/no-nesting, no-console
       await installExtension(REACT_DEVELOPER_TOOLS).catch((err) => console.log('Unable to load React DevTools:', err));
     }
+
+    registerIpcEvents();
 
     return createWindow();
   })
