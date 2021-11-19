@@ -1,5 +1,6 @@
 scripts/**/*.js
 .eslintrc.js
+electron-builder.config.js
 postcss.config.js
 tailwind.config.js
 vite.config.ts
