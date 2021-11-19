@@ -4,7 +4,7 @@ import { DuplicateIcon, XIcon } from '@heroicons/react/solid';
 export const TitleBar: React.FC = () => {
   return (
     <header className="z-50 fixed top-0 left-0 flex items-center justify-between right-0 h-10 w-full bg-blue-gray-800">
-      <div className="w-full h-full" />
+      <div className="w-full h-full webkit-app-region-drag" />
 
       <div className="flex items-center justify-center">
         <button
