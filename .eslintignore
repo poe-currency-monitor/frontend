@@ -1,4 +1,5 @@
 scripts/**/*.js
+src/main/**/*.ts
 .eslintrc.js
 electron-builder.config.js
 postcss.config.js
