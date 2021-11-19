@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import { TitleBar } from './TitleBar';
+
 export type LayoutProps = {
   /**
    * Classname to apply to the `<section />` element.
@@ -17,8 +19,12 @@ export type LayoutProps = {
  */
 export const Layout: React.FC<LayoutProps> = ({ children, className, wrapperClassName }) => {
   return (
-    <div className={wrapperClassName || 'min-h-screen h-auto'}>
-      <section className={className || 'max-w-5xl pt-8 mx-auto'}>{children}</section>
-    </div>
+    <>
+      <TitleBar />
+
+      <div className={wrapperClassName || 'min-h-screen h-auto'}>
+        <section className={className || 'max-w-5xl pt-8 mx-auto'}>{children}</section>
+      </div>
+    </>
   );
 };
