@@ -15,6 +15,7 @@ const createWindow = async (): Promise<void> => {
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
+      preload: path.join(__dirname, 'preload.js'),
     },
     minWidth: 1200,
     width: 1200,
