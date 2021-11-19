@@ -5,8 +5,23 @@
 
 import { contextBridge, ipcRenderer, shell } from 'electron';
 
-import { OpenRemoteUrl, MinimizeWindow, MaximizeWindow, CloseWindow } from '../interfaces/context-bridge.interfaces';
-import { CLOSE_WINDOW, MAXIMIZE_WINDOW, MINIMIZE_WINDOW } from './ipc-events';
+import {
+  OpenRemoteUrl,
+  MinimizeWindow,
+  MaximizeWindow,
+  CloseWindow,
+  GetProfiles,
+  SetProfiles,
+} from '../interfaces/context-bridge.interfaces';
+
+import {
+  CLOSE_WINDOW,
+  MAXIMIZE_WINDOW,
+  MINIMIZE_WINDOW,
+  GET_PROFILES,
+  RECEIVE_PROFILES,
+  SET_PROFILES,
+} from './ipc-events';
 
 /**
  * Open a specific URL in the default browser.
@@ -38,4 +53,29 @@ const closeWindow: CloseWindow = () => {
   ipcRenderer.send(CLOSE_WINDOW);
 };
 
-contextBridge.exposeInMainWorld('api', { openRemoteUrl, minimizeWindow, maximizeWindow, closeWindow });
+/**
+ * Retrieve the list of profiles stored.
+ */
+const getProfiles: GetProfiles = () => {
+  ipcRenderer.send(GET_PROFILES);
+
+  return new Promise((resolve) => {
+    ipcRenderer.once(RECEIVE_PROFILES, (_, profiles) => resolve(profiles || []));
+  });
+};
+
+/**
+ * Save the list of profiles.
+ */
+const setProfiles: SetProfiles = (profiles) => {
+  ipcRenderer.send(SET_PROFILES, profiles);
+};
+
+contextBridge.exposeInMainWorld('api', {
+  openRemoteUrl,
+  minimizeWindow,
+  maximizeWindow,
+  closeWindow,
+  getProfiles,
+  setProfiles,
+});
