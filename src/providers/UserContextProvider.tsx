@@ -63,6 +63,8 @@ export const UserContextProvider: React.FC = ({ children }) => {
   React.useEffect(() => {
     if (profiles.length) {
       window.api.setProfiles(profiles);
+    } else {
+      window.api.setProfiles([]);
     }
   }, [profiles]);
 
