@@ -13,9 +13,10 @@ export const UserContextProvider: React.FC = ({ children }) => {
   const [stashTabs, setStashTabs] = React.useState<StashTab[]>([]);
   const [stashTabsItems, setStashTabsItems] = React.useState<StashTabsItems>({});
 
-  // Snapshots are updated on the `currentProfile` variable, so we need to make
-  // sure they are also updated in the `profiles` variables and save it to the
-  // local-storage. When `profiles` changes, it will trigger a local-storage save.
+  // Snapshots are updated on the `currentProfile` state, so we need to make
+  // sure they are also updated in the `profiles` state in order to save it to
+  // the electron-store for persistence.
+  // When `profiles` state changes, it will trigger a electron-store save.
   React.useEffect(() => {
     if (currentProfile && currentProfile.snapshots) {
       const updatedProfiles = profiles.map((profile) => {
@@ -46,17 +47,22 @@ export const UserContextProvider: React.FC = ({ children }) => {
     }
   }, [poesessid]);
 
-  // On mounted, load profiles from local-storage.
+  // On mounted, load profiles from electron-store.
   React.useEffect(() => {
-    const storedProfiles = JSON.parse(localStorage.getItem('profiles') || '[]') as Profile[];
+    window.api
+      .getProfiles()
+      .then((storedProfiles) => {
+        setProfiles(storedProfiles);
 
-    setProfiles(storedProfiles);
+        return storedProfiles;
+      })
+      .catch(() => null);
   }, []);
 
-  // Store profiles in the local-storage when they change.
+  // Store profiles in the electron-store when they change.
   React.useEffect(() => {
     if (profiles.length) {
-      localStorage.setItem('profiles', JSON.stringify(profiles));
+      window.api.setProfiles(profiles);
     }
   }, [profiles]);
 
