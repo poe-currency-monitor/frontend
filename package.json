@@ -2,7 +2,7 @@
   "name": "poe-prototype",
   "license": "GPL-3.0",
   "version": "0.0.0",
-  "main": "dist/electron/index.js",
+  "main": "dist/electron/main/index.js",
   "scripts": {
     "build": "npm run build:web && npm run build:electron",
     "build:web": "cross-env NODE_ENV=production node scripts/build",
