@@ -2,11 +2,14 @@
   "name": "poe-prototype",
   "license": "GPL-3.0",
   "version": "0.0.0",
+  "main": "dist/electron/index.js",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "npm run build:web && npm run build:electron",
+    "build:web": "cross-env NODE_ENV=production node scripts/build",
+    "build:electron": "electron-builder build --config electron-builder.config.js --win --x64",
+    "dev": "cross-env NODE_ENV=development node scripts/dev",
     "postinstall": "electron-builder install-app-deps",
-    "serve": "vite preview"
+    "start": "electron ."
   },
   "dependencies": {
     "@heroicons/react": "^1.0.5",
