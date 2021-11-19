@@ -44,16 +44,16 @@ export const Auth: React.FC = () => {
     setPoesessid(event.target.value);
   };
 
-  // On mounted, if there is already a `poesessid` it means it was set by the
-  // `UserContext` when loading it from the local-storage. Try to silently
-  // login with that `poesessid`. If it fails, remove it from local-storage.
+  // Components are mounted first before context is set, so we assume that the
+  // user auto-login if there a `user.poesessid` and the login mutation is not
+  // currently loading.
   //
   // TODO: on auto-login fail, create a notification to ask for user to re-login.
   React.useEffect(() => {
-    if (user.poesessid) {
+    if (user.poesessid && !doLogin.isLoading) {
       doLogin.mutate(user.poesessid, { onError: () => user.setPoesessid(null) });
     }
-  }, []);
+  }, [user.poesessid]);
 
   return (
     <Layout className="max-w-xl mx-auto pt-8">
