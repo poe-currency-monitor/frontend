@@ -19,6 +19,5 @@ export type Snapshot = {
    */
   date: string;
   stashTabs: StashTab[];
-  // TODO: keep track of what stash-tab does the item comes from.
   items: PricedItem[];
 };

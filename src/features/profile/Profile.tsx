@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { StashTabsItems } from '../../interfaces/poe.interfaces';
+import { ExtendedItem, StashTabsItems } from '../../interfaces/poe.interfaces';
 import { Profile as ProfileType } from '../../interfaces/profile.interfaces';
 import { UserContext } from '../../contexts/UserContext';
 import { useLoadStashTabs } from '../../hooks/useLoadStashTabs';
@@ -79,8 +79,13 @@ export const Profile: React.FC = () => {
           if (response.data) {
             const stashTabsItems: StashTabsItems = {};
 
-            Object.entries(response.data.items).forEach(([key, value]) => {
-              stashTabsItems[key] = value.items;
+            Object.entries(response.data.items).forEach(([tabId, value]) => {
+              const extendedItems: ExtendedItem[] = value.items.map((item) => ({
+                ...item,
+                tabId,
+              }));
+
+              stashTabsItems[tabId] = extendedItems;
             });
 
             user.setStashTabsItems(stashTabsItems);

@@ -89,12 +89,16 @@ export type Item = {
   };
 };
 
+export type ExtendedItem = Item & {
+  tabId: string;
+};
+
 /**
  * Type of the `tabsItems` in the UserContext. The key is the `id` of a
  * `StashTab`.
  */
-export type StashTabsItems = { [key: string]: Item[] };
+export type StashTabsItems = { [key: string]: ExtendedItem[] };
 
-export type PricedItem = Item & {
+export type PricedItem = ExtendedItem & {
   price: ItemPrice;
 };

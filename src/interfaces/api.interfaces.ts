@@ -19,7 +19,7 @@ export type StashTabsResponse = {
 export type StashTabsItemsResponse = {
   accountName: string;
   items: {
-    [key: string]: {
+    [tabId: string]: {
       tabIndex: number;
       items: Item[];
     };
