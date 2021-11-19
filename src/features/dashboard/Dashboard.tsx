@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { ClockIcon, PlusCircleIcon } from '@heroicons/react/solid';
 
+import { StashTabsItems } from '../../interfaces/poe.interfaces';
 import { priceStashTabsItems } from '../../lib/item-pricing';
 import { UserContext } from '../../contexts/UserContext';
 import { RatesContext } from '../../contexts/RatesContext';
@@ -21,7 +22,22 @@ export const Dashboard: React.FC = () => {
     [user.currentProfile?.snapshots],
   );
 
-  const pricedItems = React.useMemo(() => priceStashTabsItems(user.stashTabsItems, rates), [user.stashTabs]);
+  // Filter stash-tabs with with tabs selected from the current-profile.
+  const filteredStashTabsItems = React.useMemo<StashTabsItems>(() => {
+    const filteredTabs = Object.keys(user.stashTabsItems).filter((tabId) =>
+      user.currentProfile?.tabs.find((tab) => tab.id === tabId),
+    );
+
+    return filteredTabs.reduce((acc, tabId) => {
+      return {
+        ...acc,
+        [tabId]: user.stashTabsItems[tabId],
+      };
+    }, {});
+  }, [user.stashTabsItems, user.currentProfile]);
+
+  const pricedItems = React.useMemo(() => priceStashTabsItems(filteredStashTabsItems, rates), [filteredStashTabsItems]);
+
   const totalPrice = React.useMemo(() => pricedItems.reduce((acc, item) => acc + item.price.total, 0), [pricedItems]);
 
   const createSnapshot = () => {
