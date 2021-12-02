@@ -5,6 +5,7 @@ import { UserContext } from './contexts/UserContext';
 import { Auth } from './features/auth/Auth';
 import { Profile } from './features/profile/Profile';
 import { Dashboard } from './features/dashboard/Dashboard';
+import { Snapshots } from './features/snapshots/Snapshots';
 
 export type ProtectedRouteProps = RouteProps & {
   component: React.FC;
@@ -42,6 +43,7 @@ export const AppRoutes: React.FC = () => (
       <Route path="/" exact component={Auth} />
       <ProtectedRoute path="/profile" component={Profile} />
       <ProtectedRoute path="/dashboard" component={Dashboard} />
+      <ProtectedRoute path="/snapshots" component={Snapshots} />
     </Switch>
   </Router>
 );

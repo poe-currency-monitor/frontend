@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { ClockIcon, PlusCircleIcon } from '@heroicons/react/solid';
+import { useHistory } from 'react-router-dom';
 
 import { StashTabsItems } from '../../interfaces/poe.interfaces';
 import { priceStashTabsItems } from '../../lib/item-pricing';
@@ -14,6 +15,8 @@ import { DashboardItemsTable } from './DashboardItemsTable';
  * View component for the `/dashboard` route.
  */
 export const Dashboard: React.FC = () => {
+  const history = useHistory();
+
   const user = React.useContext(UserContext);
   const rates = React.useContext(RatesContext);
 
@@ -65,6 +68,10 @@ export const Dashboard: React.FC = () => {
     createSnapshot();
   };
 
+  const handleManageSnapshots = () => {
+    history.push('/snapshots');
+  };
+
   return (
     <Layout>
       <h1 className="mb-6 leading-tight text-3xl font-bold">Dashboard</h1>
@@ -75,7 +82,7 @@ export const Dashboard: React.FC = () => {
           Create a snapshot
         </Button>
 
-        <Button variant="secondary" className="flex flex-row" type="button">
+        <Button variant="secondary" className="flex flex-row" type="button" onClick={handleManageSnapshots}>
           <ClockIcon className="h-4 w-auto mr-2" />
           {snapshotsAmount} snapshot{snapshotsAmount > 1 ? 's' : ''}
         </Button>
