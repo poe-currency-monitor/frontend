@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": "./",
     "outDir": "dist/electron",
     "target": "es6",
     "module": "commonjs",
@@ -13,7 +14,10 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "types": ["node"],
-    "lib": ["esnext", "dom"]
+    "lib": ["esnext", "dom"],
+    "paths": {
+      "@/*": ["src/*"]
+    }
   },
   "include": ["./src/main/**/*"]
 }
